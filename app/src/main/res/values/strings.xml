@@ -6,4 +6,11 @@
     <string name="go_back">Go Back</string>
     <string name="artist_name">Artist Name:</string>
     <string name="artist_pic">TODO</string>
+    <string name="textview">TextView</string>
+    <string name="backbutton">BackButton</string>
+    <string name="users_name_txt">Users_name_txt</string>
+    <string name="liked">liked</string>
+    <string name="todo">TODO</string>
+    <string name="bubble">Bubble</string>
+    <string name="todo">TODO</string>
 </resources>
