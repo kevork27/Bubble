@@ -17,6 +17,7 @@
     <string name="upload_successful">Upload Successful</string>
 
     <string name="settings">Settings</string>
+    <string name="logout">Logout</string>
 
     <string-array name="song_genres">
         <item></item>

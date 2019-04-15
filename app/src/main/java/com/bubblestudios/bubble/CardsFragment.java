@@ -18,6 +18,8 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -37,11 +39,14 @@ public class CardsFragment extends Fragment implements CardStackListener {
     private PlayerView playerView;
     private CardStackView cardStackView;
     private DocumentReference snippetRef;
+    private Snippet currentSnippet;
+    private String userID;
+    private FirebaseFirestore db;
 
     public CardsFragment() {
     }
 
-    public static CardsFragment newInstance(String param1, String param2) {
+    public static CardsFragment newInstance() {
         CardsFragment fragment = new CardsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -61,6 +66,10 @@ public class CardsFragment extends Fragment implements CardStackListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_cards, container, false);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        userID = user.getUid();
+        db = FirebaseFirestore.getInstance();
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
@@ -137,6 +146,9 @@ public class CardsFragment extends Fragment implements CardStackListener {
     @Override
     public void onCardSwiped(Direction direction) {
         Log.d("direction", "onCardSwiped: " + direction.toString() + " ref: " + snippetRef.getId());
+        if(direction == Direction.Right) {
+            db.collection("users").document(userID).collection("liked").add(currentSnippet);
+        }
     }
 
     @Override
@@ -163,6 +175,7 @@ public class CardsFragment extends Fragment implements CardStackListener {
         Log.d("disappear", "onCardDisappeared: " + position);
         CardViewHolder viewHolder = (CardViewHolder) cardStackView.findViewHolderForAdapterPosition(position);
         snippetRef = viewHolder.snippetRef;
+        currentSnippet = adapter.getItem(position);
     }
 
     public interface OnFragmentInteractionListener {

@@ -60,7 +60,6 @@ public class CardStackAdapter extends FirestoreRecyclerAdapter<Snippet, CardView
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), snippet.getTitle(), Toast.LENGTH_SHORT).show();
                 exoPlayer.setPlayWhenReady(!exoPlayer.getPlayWhenReady());
             }
         });

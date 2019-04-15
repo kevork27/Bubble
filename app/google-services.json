@@ -13,7 +13,12 @@
           "package_name": "com.bubblestudios.bubble"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "534297815725-b5hfd5kb98fs46asaai7cackpdfe3a27.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB7kG4Lc8rZNhqV8zii9c0g0k-auiJ5tts"

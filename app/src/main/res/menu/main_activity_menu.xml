@@ -9,4 +9,8 @@
         android:id="@+id/menu_upload_button"
         android:title="@string/upload"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_logout_button"
+        android:title="@string/logout"
+        app:showAsAction="never"/>
 </menu>
