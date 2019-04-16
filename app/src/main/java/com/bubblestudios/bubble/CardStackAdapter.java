@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
@@ -18,7 +18,7 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.StorageReference;
 
-public class CardStackAdapter extends FirebaseRecyclerAdapter<Snippet, CardViewHolder> {
+public class CardStackAdapter extends FirestoreRecyclerAdapter<Snippet, CardViewHolder> {
 
     private StorageReference albumArtRef;
     private StorageReference snippetRef;
@@ -28,7 +28,7 @@ public class CardStackAdapter extends FirebaseRecyclerAdapter<Snippet, CardViewH
     private int firstLoad = 0;
 
 
-    public CardStackAdapter(@NonNull FirebaseRecyclerOptions options, StorageReference albumArtRef, StorageReference snippetRef, SimpleExoPlayer exoPlayer, DataSource.Factory dataSourceFactory, CardsFragment cardsFragment) {
+    public CardStackAdapter(@NonNull FirestoreRecyclerOptions options, StorageReference albumArtRef, StorageReference snippetRef, SimpleExoPlayer exoPlayer, DataSource.Factory dataSourceFactory, CardsFragment cardsFragment) {
         super(options);
         this.albumArtRef = albumArtRef;
         this.snippetRef = snippetRef;
@@ -38,10 +38,11 @@ public class CardStackAdapter extends FirebaseRecyclerAdapter<Snippet, CardViewH
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull final CardViewHolder holder, final int position, @NonNull final Snippet snippet) {
+    protected void onBindViewHolder(@NonNull final CardViewHolder holder, int position, @NonNull final Snippet snippet) {
         holder.artistName.setText(snippet.getArtist());
         holder.songTitle.setText(snippet.getTitle());
         Glide.with(holder.albumArt).load(albumArtRef.child(snippet.getAlbumArt())).into(holder.albumArt);
+        holder.snippetRef = getSnapshots().getSnapshot(position).getReference();
 
         snippetRef.child(snippet.getSnippet()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -49,7 +50,7 @@ public class CardStackAdapter extends FirebaseRecyclerAdapter<Snippet, CardViewH
                 MediaSource audioSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(uri);
                 holder.audioSource = audioSource;
 
-                if((firstLoad == 0) && (position == 0)) {
+                if((firstLoad == 0) && (holder.getAdapterPosition() == 0)) {
                     cardsFragment.firstPlay();
                     firstLoad = 1;
                 }
@@ -59,7 +60,6 @@ public class CardStackAdapter extends FirebaseRecyclerAdapter<Snippet, CardViewH
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), snippet.getTitle(), Toast.LENGTH_SHORT).show();
                 exoPlayer.setPlayWhenReady(!exoPlayer.getPlayWhenReady());
             }
         });

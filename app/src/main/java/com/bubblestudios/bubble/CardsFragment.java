@@ -5,41 +5,30 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.bumptech.glide.Glide;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.firebase.ui.database.SnapshotParser;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.exoplayer2.ExoPlayerFactory;
-import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.source.ConcatenatingMediaSource;
-import com.google.android.exoplayer2.source.ExtractorMediaSource;
-import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.CardStackView;
 import com.yuyakaido.android.cardstackview.Direction;
-import com.yuyakaido.android.cardstackview.StackFrom;
 
 public class CardsFragment extends Fragment implements CardStackListener {
 
@@ -49,11 +38,15 @@ public class CardsFragment extends Fragment implements CardStackListener {
     private DataSource.Factory dataSourceFactory;
     private PlayerView playerView;
     private CardStackView cardStackView;
+    private DocumentReference snippetRef;
+    private Snippet currentSnippet;
+    private String userID;
+    private FirebaseFirestore db;
 
     public CardsFragment() {
     }
 
-    public static CardsFragment newInstance(String param1, String param2) {
+    public static CardsFragment newInstance() {
         CardsFragment fragment = new CardsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -73,6 +66,11 @@ public class CardsFragment extends Fragment implements CardStackListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_cards, container, false);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        userID = user.getUid();
+        db = FirebaseFirestore.getInstance();
+
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
         final StorageReference albumArtRef = storageRef.child("AlbumArt");
@@ -83,8 +81,8 @@ public class CardsFragment extends Fragment implements CardStackListener {
         dataSourceFactory = new DefaultDataSourceFactory(getContext(), Util.getUserAgent(getContext(), "Bubble"));
         playerView.setPlayer(exoPlayer);
 
-        Query query = FirebaseDatabase.getInstance().getReference().child("snippets");
-        FirebaseRecyclerOptions<Snippet> options = new FirebaseRecyclerOptions.Builder<Snippet>().setQuery(query, Snippet.class).build();
+        Query query = FirebaseFirestore.getInstance().collection("snippets").orderBy("timeStamp");
+        FirestoreRecyclerOptions<Snippet> options = new FirestoreRecyclerOptions.Builder<Snippet>().setQuery(query, Snippet.class).build();
 
         adapter = new CardStackAdapter(options, albumArtRef, snippetRef, exoPlayer, dataSourceFactory, this);
         cardStackView = view.findViewById(R.id.card_view);
@@ -147,7 +145,10 @@ public class CardsFragment extends Fragment implements CardStackListener {
 
     @Override
     public void onCardSwiped(Direction direction) {
-
+        Log.d("direction", "onCardSwiped: " + direction.toString() + " ref: " + snippetRef.getId());
+        if(direction == Direction.Right) {
+            db.collection("users").document(userID).collection("liked").add(currentSnippet);
+        }
     }
 
     @Override
@@ -162,7 +163,6 @@ public class CardsFragment extends Fragment implements CardStackListener {
 
     @Override
     public void onCardAppeared(View view, int position) {
-        Log.d("appear", "onCardAppeared: " + position);
         CardViewHolder viewHolder = (CardViewHolder) cardStackView.findViewHolderForAdapterPosition(position);
         exoPlayer.prepare(viewHolder.audioSource);
         playerView.setPlayer(exoPlayer);
@@ -173,6 +173,9 @@ public class CardsFragment extends Fragment implements CardStackListener {
     public void onCardDisappeared(View view, int position) {
         exoPlayer.setPlayWhenReady(false);
         Log.d("disappear", "onCardDisappeared: " + position);
+        CardViewHolder viewHolder = (CardViewHolder) cardStackView.findViewHolderForAdapterPosition(position);
+        snippetRef = viewHolder.snippetRef;
+        currentSnippet = adapter.getItem(position);
     }
 
     public interface OnFragmentInteractionListener {
