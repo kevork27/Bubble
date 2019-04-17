@@ -1,9 +1,13 @@
 package com.bubblestudios.bubble;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,15 +16,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firebase.ui.firestore.SnapshotParser;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -29,11 +38,18 @@ import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.CardStackView;
 import com.yuyakaido.android.cardstackview.Direction;
+import com.yuyakaido.android.cardstackview.Duration;
+import com.yuyakaido.android.cardstackview.SwipeAnimationSetting;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class CardsFragment extends Fragment implements CardStackListener {
 
     private OnFragmentInteractionListener mListener;
     private CardStackAdapter adapter;
+    private CardStackLayoutManager layoutManager;
     private SimpleExoPlayer exoPlayer;
     private DataSource.Factory dataSourceFactory;
     private PlayerView playerView;
@@ -42,6 +58,7 @@ public class CardsFragment extends Fragment implements CardStackListener {
     private Snippet currentSnippet;
     private String userID;
     private FirebaseFirestore db;
+    private int lastPosition = 0;
 
     public CardsFragment() {
     }
@@ -87,7 +104,7 @@ public class CardsFragment extends Fragment implements CardStackListener {
         adapter = new CardStackAdapter(options, albumArtRef, snippetRef, exoPlayer, dataSourceFactory, this);
         cardStackView = view.findViewById(R.id.card_view);
         cardStackView.setAdapter(adapter);
-        CardStackLayoutManager layoutManager = new CardStackLayoutManager(getContext(), this);
+        layoutManager = new CardStackLayoutManager(getContext(), this);
         cardStackView.setLayoutManager(layoutManager);
 
         final Button pausePlayButton = view.findViewById(R.id.pause_play_button);
@@ -98,7 +115,35 @@ public class CardsFragment extends Fragment implements CardStackListener {
             }
         });
 
+        final SwipeAnimationSetting likeSetting = new SwipeAnimationSetting.Builder().setDirection(Direction.Right).setDuration(Duration.Normal.duration).build();
+        final SwipeAnimationSetting dislikeSetting = new SwipeAnimationSetting.Builder().setDirection(Direction.Left).setDuration(Duration.Normal.duration).build();
+
+        Button likeButton = view.findViewById(R.id.like_button);
+        likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                layoutManager.setSwipeAnimationSetting(likeSetting);
+                cardStackView.swipe();
+            }
+        });
+        Button dislikeButton = view.findViewById(R.id.dislike_button);
+        dislikeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                layoutManager.setSwipeAnimationSetting(dislikeSetting);
+                cardStackView.swipe();
+            }
+        });
+
+        adapter.startListening();
+
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        lastPosition = layoutManager.getTopPosition();
     }
 
     @Override
@@ -121,7 +166,15 @@ public class CardsFragment extends Fragment implements CardStackListener {
     @Override
     public void onStart() {
         super.onStart();
-        adapter.startListening();
+        //adapter.startListening();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(lastPosition != 0){
+            cardStackView.scrollToPosition(lastPosition);
+        }
     }
 
     public void firstPlay() {
@@ -134,8 +187,14 @@ public class CardsFragment extends Fragment implements CardStackListener {
     @Override
     public void onStop() {
         super.onStop();
-        adapter.stopListening();
+        //adapter.stopListening();
         exoPlayer.setPlayWhenReady(false);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        adapter.stopListening();
     }
 
     @Override
@@ -145,9 +204,11 @@ public class CardsFragment extends Fragment implements CardStackListener {
 
     @Override
     public void onCardSwiped(Direction direction) {
-        Log.d("direction", "onCardSwiped: " + direction.toString() + " ref: " + snippetRef.getId());
         if(direction == Direction.Right) {
-            db.collection("users").document(userID).collection("liked").add(currentSnippet);
+            //db.collection("users").document(userID).collection("liked").add(currentSnippet);
+            db.collection("snippets").document(snippetRef.getId()).update("liked_users", FieldValue.arrayUnion(userID));
+        } else if(direction == Direction.Left) {
+            db.collection("snippets").document(snippetRef.getId()).update("disliked_users", FieldValue.arrayUnion(userID));
         }
     }
 

@@ -65,7 +65,8 @@ public class UserProfileFragment extends Fragment {
         final StorageReference albumArtRef = storageRef.child("AlbumArt");
 
         Query query = FirebaseFirestore.getInstance().collection("users").document(user.getUid()).collection("liked").orderBy("timeStamp");
-        FirestoreRecyclerOptions<Snippet> options = new FirestoreRecyclerOptions.Builder<Snippet>().setQuery(query, Snippet.class).build();
+        Query query2 = FirebaseFirestore.getInstance().collection("snippets").whereArrayContains("liked_users", user.getUid());
+        FirestoreRecyclerOptions<Snippet> options = new FirestoreRecyclerOptions.Builder<Snippet>().setQuery(query2, Snippet.class).build();
         adapter = new FirestoreRecyclerAdapter<Snippet, LikedSongHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull LikedSongHolder holder, int position, @NonNull Snippet snippet) {
