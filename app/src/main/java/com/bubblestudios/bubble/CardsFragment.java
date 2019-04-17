@@ -58,6 +58,7 @@ public class CardsFragment extends Fragment implements CardStackListener {
     private Snippet currentSnippet;
     private String userID;
     private FirebaseFirestore db;
+    private int lastPosition = 0;
 
     public CardsFragment() {
     }
@@ -134,12 +135,15 @@ public class CardsFragment extends Fragment implements CardStackListener {
             }
         });
 
+        adapter.startListening();
+
         return view;
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        lastPosition = layoutManager.getTopPosition();
     }
 
     @Override
@@ -162,7 +166,15 @@ public class CardsFragment extends Fragment implements CardStackListener {
     @Override
     public void onStart() {
         super.onStart();
-        adapter.startListening();
+        //adapter.startListening();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(lastPosition != 0){
+            cardStackView.scrollToPosition(lastPosition);
+        }
     }
 
     public void firstPlay() {
@@ -175,8 +187,14 @@ public class CardsFragment extends Fragment implements CardStackListener {
     @Override
     public void onStop() {
         super.onStop();
-        adapter.stopListening();
+        //adapter.stopListening();
         exoPlayer.setPlayWhenReady(false);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        adapter.stopListening();
     }
 
     @Override
