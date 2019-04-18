@@ -1,7 +1,6 @@
 package com.bubblestudios.bubble;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -17,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -28,11 +28,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.sql.Types;
-
-import static android.graphics.Color.parseColor;
-
 public class MainActivity extends AppCompatActivity implements CardsFragment.OnFragmentInteractionListener, UserProfileFragment.OnFragmentInteractionListener {
+
 
     private Toolbar toolbar;
     private ActionBar actionBar;
@@ -45,19 +42,9 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
         setContentView(R.layout.activity_main);
 
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        toolbar.setLogo(R.drawable.logo);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        //toolbar.setTitle(string.app_name);
-        //toolbar.setTitleTextColor(parseColor("#FFACFC"));
-        toolbar.setBackgroundColor(parseColor("#560A86"));
+        toolbar.setTitle(R.string.app_name);
         actionBar = getSupportActionBar();
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewPager.setCurrentItem(0);
-            }
-        });
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         user.getUid();
@@ -75,29 +62,9 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
         viewPager = findViewById(R.id.main_viewPager);
         pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i1) {
 
-            }
 
-            @Override
-            public void onPageSelected(int i) {
-                switch(i) {
-                    case 0:
-                        actionBar.setDisplayHomeAsUpEnabled(false);
-                        break;
-                    case 1:
-                        actionBar.setDisplayHomeAsUpEnabled(true);
-                        break;
-                }
-            }
 
-            @Override
-            public void onPageScrollStateChanged(int i) {
-
-            }
-        });
     }
 
     @Override
@@ -152,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
     public void onFragmentInteraction(Uri uri) {
 
     }
+
 
     public static class PagerAdapter extends FragmentPagerAdapter {
         private static int NUM_ITEMS = 2;
