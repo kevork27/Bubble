@@ -23,7 +23,9 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,6 +34,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
@@ -44,11 +47,13 @@ import com.yuyakaido.android.cardstackview.SwipeAnimationSetting;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class CardsFragment extends Fragment implements CardStackListener {
 
     private OnFragmentInteractionListener mListener;
-    private CardStackAdapter adapter;
+    //private CardStackAdapter adapter;
+    private CardStackAdapter2 adapter;
     private CardStackLayoutManager layoutManager;
     private SimpleExoPlayer exoPlayer;
     private DataSource.Factory dataSourceFactory;
@@ -98,12 +103,26 @@ public class CardsFragment extends Fragment implements CardStackListener {
         dataSourceFactory = new DefaultDataSourceFactory(getContext(), Util.getUserAgent(getContext(), "Bubble"));
         playerView.setPlayer(exoPlayer);
 
+        cardStackView = view.findViewById(R.id.card_view);
+
         Query query = FirebaseFirestore.getInstance().collection("snippets").orderBy("timeStamp");
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    List<DocumentSnapshot> snapshotList = task.getResult().getDocuments();
+
+                    adapter = new CardStackAdapter2(snapshotList, albumArtRef, snippetRef, exoPlayer, dataSourceFactory, CardsFragment.this);
+                    cardStackView.setAdapter(adapter);
+                    adapter.getFilter().filter(userID);
+                }
+            }
+        });
         FirestoreRecyclerOptions<Snippet> options = new FirestoreRecyclerOptions.Builder<Snippet>().setQuery(query, Snippet.class).build();
 
-        adapter = new CardStackAdapter(options, albumArtRef, snippetRef, exoPlayer, dataSourceFactory, this);
-        cardStackView = view.findViewById(R.id.card_view);
-        cardStackView.setAdapter(adapter);
+        //adapter = new CardStackAdapter(options, albumArtRef, snippetRef, exoPlayer, dataSourceFactory, this);
+
+        //cardStackView.setAdapter(adapter);
         layoutManager = new CardStackLayoutManager(getContext(), this);
         cardStackView.setLayoutManager(layoutManager);
 
@@ -135,7 +154,7 @@ public class CardsFragment extends Fragment implements CardStackListener {
             }
         });
 
-        adapter.startListening();
+        //adapter.startListening();
 
         return view;
     }
@@ -178,7 +197,7 @@ public class CardsFragment extends Fragment implements CardStackListener {
     }
 
     public void firstPlay() {
-        CardViewHolder viewHolder = (CardViewHolder) cardStackView.findViewHolderForAdapterPosition(0);
+        CardViewHolder viewHolder = (CardViewHolder) cardStackView.findViewHolderForAdapterPosition(layoutManager.getTopPosition());
         exoPlayer.prepare(viewHolder.audioSource);
         playerView.setPlayer(exoPlayer);
         exoPlayer.setPlayWhenReady(true);
@@ -194,7 +213,7 @@ public class CardsFragment extends Fragment implements CardStackListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        adapter.stopListening();
+        //adapter.stopListening();
     }
 
     @Override
@@ -205,7 +224,6 @@ public class CardsFragment extends Fragment implements CardStackListener {
     @Override
     public void onCardSwiped(Direction direction) {
         if(direction == Direction.Right) {
-            //db.collection("users").document(userID).collection("liked").add(currentSnippet);
             db.collection("snippets").document(snippetRef.getId()).update("liked_users", FieldValue.arrayUnion(userID));
         } else if(direction == Direction.Left) {
             db.collection("snippets").document(snippetRef.getId()).update("disliked_users", FieldValue.arrayUnion(userID));
@@ -225,22 +243,22 @@ public class CardsFragment extends Fragment implements CardStackListener {
     @Override
     public void onCardAppeared(View view, int position) {
         CardViewHolder viewHolder = (CardViewHolder) cardStackView.findViewHolderForAdapterPosition(position);
-        exoPlayer.prepare(viewHolder.audioSource);
-        playerView.setPlayer(exoPlayer);
-        exoPlayer.setPlayWhenReady(true);
+        if(position != 0) {
+            exoPlayer.prepare(viewHolder.audioSource);
+            playerView.setPlayer(exoPlayer);
+            exoPlayer.setPlayWhenReady(true);
+        }
     }
 
     @Override
     public void onCardDisappeared(View view, int position) {
         exoPlayer.setPlayWhenReady(false);
-        Log.d("disappear", "onCardDisappeared: " + position);
         CardViewHolder viewHolder = (CardViewHolder) cardStackView.findViewHolderForAdapterPosition(position);
         snippetRef = viewHolder.snippetRef;
         currentSnippet = adapter.getItem(position);
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

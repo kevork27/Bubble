@@ -53,6 +53,12 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
         //toolbar.setTitleTextColor(parseColor("#FFACFC"));
         toolbar.setBackgroundColor(parseColor("#FFFFFF"));
         actionBar = getSupportActionBar();
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewPager.setCurrentItem(0);
+            }
+        });
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         user.getUid();
@@ -70,7 +76,29 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
         viewPager = findViewById(id.main_viewPager);
         pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
 
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                switch(i) {
+                    case 0:
+                        actionBar.setDisplayHomeAsUpEnabled(false);
+                        break;
+                    case 1:
+                        actionBar.setDisplayHomeAsUpEnabled(true);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
     }
 
     @Override
