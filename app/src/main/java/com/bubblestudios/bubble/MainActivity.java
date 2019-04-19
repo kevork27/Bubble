@@ -29,10 +29,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import static android.graphics.Color.parseColor;
-import static com.bubblestudios.bubble.R.*;
-import static com.bubblestudios.bubble.R.drawable.*;
-import static com.bubblestudios.bubble.R.id.main_toolbar;
-import static java.lang.Integer.*;
 
 public class MainActivity extends AppCompatActivity implements CardsFragment.OnFragmentInteractionListener, UserProfileFragment.OnFragmentInteractionListener {
 
@@ -44,10 +40,10 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(layout.activity_main);
+        setContentView(R.layout.activity_main);
 
-        toolbar = (Toolbar) findViewById(main_toolbar);
-        toolbar.setLogo(logo);
+        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        toolbar.setLogo(R.drawable.logo);
         setSupportActionBar(toolbar);
         //toolbar.setTitle(string.app_name);
         //toolbar.setTitleTextColor(parseColor("#FFACFC"));
@@ -63,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         user.getUid();
         Uri photoUrl = user.getPhotoUrl();
-        ImageView profileIcon = findViewById(id.profile_icon);
+        ImageView profileIcon = findViewById(R.id.profile_icon);
         Glide.with(profileIcon).load(photoUrl).apply(RequestOptions.circleCropTransform()).into(profileIcon);
 
         profileIcon.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
             }
         });
 
-        viewPager = findViewById(id.main_viewPager);
+        viewPager = findViewById(R.id.main_viewPager);
         pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -128,14 +124,14 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-            case id.menu_settings_button:
+            case R.id.menu_settings_button:
                 //settings menu
                 return true;
-            case id.menu_upload_button:
+            case R.id.menu_upload_button:
                 Intent intent = new Intent(this, UploadActivity.class);
                 startActivity(intent);
                 return true;
-            case id.menu_logout_button:
+            case R.id.menu_logout_button:
                 AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
