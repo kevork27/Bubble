@@ -28,6 +28,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.sql.Types;
+
 import static android.graphics.Color.parseColor;
 
 public class MainActivity extends AppCompatActivity implements CardsFragment.OnFragmentInteractionListener, UserProfileFragment.OnFragmentInteractionListener {
@@ -45,9 +47,10 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         toolbar.setLogo(R.drawable.logo);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
         //toolbar.setTitle(string.app_name);
         //toolbar.setTitleTextColor(parseColor("#FFACFC"));
-        toolbar.setBackgroundColor(parseColor("#FFFFFF"));
+        toolbar.setBackgroundColor(parseColor("#560A86"));
         actionBar = getSupportActionBar();
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
