@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +15,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -28,8 +25,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity implements CardsFragment.OnFragmentInteractionListener, UserProfileFragment.OnFragmentInteractionListener {
+import static android.graphics.Color.parseColor;
 
+public class MainActivity extends AppCompatActivity implements CardsFragment.OnFragmentInteractionListener, LikedSongsFragment.OnFragmentInteractionListener {
 
     private Toolbar toolbar;
     private ActionBar actionBar;
@@ -42,9 +40,19 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
         setContentView(R.layout.activity_main);
 
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        toolbar.setLogo(R.drawable.logo);
         setSupportActionBar(toolbar);
-        toolbar.setTitle(R.string.app_name);
+        getSupportActionBar().setTitle("");
+        //toolbar.setTitle(string.app_name);
+        //toolbar.setTitleTextColor(parseColor("#FFACFC"));
+        toolbar.setBackgroundColor(parseColor("#560A86"));
         actionBar = getSupportActionBar();
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewPager.setCurrentItem(0);
+            }
+        });
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         user.getUid();
@@ -62,9 +70,29 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
         viewPager = findViewById(R.id.main_viewPager);
         pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
 
+            }
 
+            @Override
+            public void onPageSelected(int i) {
+                switch(i) {
+                    case 0:
+                        actionBar.setDisplayHomeAsUpEnabled(false);
+                        break;
+                    case 1:
+                        actionBar.setDisplayHomeAsUpEnabled(true);
+                        break;
+                }
+            }
 
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
     }
 
     @Override
@@ -120,7 +148,6 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
 
     }
 
-
     public static class PagerAdapter extends FragmentPagerAdapter {
         private static int NUM_ITEMS = 2;
 
@@ -139,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
                 case 0:
                     return CardsFragment.newInstance();
                 case 1:
-                    return UserProfileFragment.newInstance();
+                    return LikedSongsFragment.newInstance();
                 default:
                     return null;
             }
