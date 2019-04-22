@@ -3,12 +3,15 @@ package com.bubblestudios.bubble;
 import com.google.firebase.firestore.ServerTimestamp;
 
 import java.util.Date;
+import java.util.List;
 
 public class Snippet {
     private String title;
     private String artist;
     private String snippet;
     private String albumArt;
+    private List<String> liked_users;
+    private List<String> disliked_users;
     @ServerTimestamp private Date timeStamp;
 
     public Snippet(String title, String artist, String snippet, String albumArt) {
@@ -58,6 +61,22 @@ public class Snippet {
 
     public void setTimeStamp(Date timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    public List<String> getLiked_users() {
+        return liked_users;
+    }
+
+    public void setLiked_users(List<String> liked_users) {
+        this.liked_users = liked_users;
+    }
+
+    public List<String> getDisliked_users() {
+        return disliked_users;
+    }
+
+    public void setDisliked_users(List<String> disliked_users) {
+        this.disliked_users = disliked_users;
     }
 
 }

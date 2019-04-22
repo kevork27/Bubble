@@ -26,6 +26,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import static android.graphics.Color.parseColor;
+
 public class UploadActivity extends AppCompatActivity {
 
     private int PICK_IMAGE_REQUEST = 1;
@@ -46,6 +48,9 @@ public class UploadActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.upload_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        //toolbar.setLogo(R.drawable.logo);
+        toolbar.setBackgroundColor(parseColor("#560A86"));
         toolbar.setTitle(R.string.upload);
 
         ActionBar actionBar = getSupportActionBar();
