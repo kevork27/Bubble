@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
                         actionBar.setDisplayHomeAsUpEnabled(true);
                         break;
                 }
+                invalidateOptionsMenu();
             }
 
             @Override
@@ -121,6 +122,15 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_activity_menu, menu);
+        int pageNum = (viewPager.getCurrentItem());
+        if ( pageNum== 1) {
+            menu.findItem(R.id.app_bar_search).setVisible(true);
+
+        }
+        else {
+            menu.findItem(R.id.app_bar_search).setVisible(false);
+        }
+
         return true;
     }
 
