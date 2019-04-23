@@ -74,20 +74,59 @@ public class LikedSongsFragment extends Fragment {
         adapter = new FirestoreRecyclerAdapter<Snippet, LikedSongHolder>(options) {
             //The Adapter creates ViewHolders and Binds them to their data. Holders contain each song's data and layout
             @Override
-            protected void onBindViewHolder(@NonNull LikedSongHolder holder, int position, @NonNull Snippet snippet) {
+            protected void onBindViewHolder(@NonNull LikedSongHolder holder, int position, @NonNull final Snippet snippet) {
+
                 holder.songTitle.setText(snippet.getTitle());
                 holder.artistName.setText(snippet.getArtist());
                 Glide.with(holder.albumArt).load(albumArtRef.child(snippet.getAlbumArt())).into(holder.albumArt);
+
+
+
+
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                       //Create Bundle so that snippet data can be translated to dialog
+                        Bundle snips = new Bundle();
+                        snips.putString("songTitle",snippet.getTitle());
+                        snips.putString("artistName",snippet.getArtist());
+                        //snips.putString("artist_blurb", snippet.getArtistBlurb());
+                        //snips.putString("song_blurb", snippet.getSong_blurb());
+
                         //Listens for click on each entry in recyclerView entries
                         //Opens new SongDetailsDialog for the clicked entry
                         SongDetailsDialog dialog = new SongDetailsDialog();
                         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        dialog.setArguments(snips);
                         dialog.show(ft, SongDetailsDialog.TAG);
+
                     }
                 });
+
+                Snippet snip = snippet;
+                //////
+                holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+
+                        Bundle snips = new Bundle();
+                        snips.putString("songTitle",snippet.getTitle());
+                        snips.putString("artistName",snippet.getArtist());
+
+
+                        //Listens for click on each entry in recyclerView entries
+                        //Opens new ArtistDetailsDialog for the clicked entry
+
+                        ArtistProfileDialog a_dialog = new ArtistProfileDialog();
+                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        a_dialog.setArguments(snips);
+                        a_dialog.show(ft, ArtistProfileDialog.TAG);
+                        return true;
+                    }
+                });
+                //////
+
             }
             @NonNull
             @Override

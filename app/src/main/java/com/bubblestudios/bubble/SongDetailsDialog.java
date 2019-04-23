@@ -5,6 +5,7 @@ import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.Toolbar;
 
 import com.bubblestudios.bubble.R;
 import com.bumptech.glide.Glide;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -25,6 +27,7 @@ public class SongDetailsDialog extends DialogFragment {
     TextView songTitle;
     ImageView albumArt;
     Snippet snippet;
+    TextView song_blurb;
 
     public void attachSnippet(Snippet snippet) {
 
@@ -43,18 +46,18 @@ public class SongDetailsDialog extends DialogFragment {
 
         super.onCreateView(inflater, container, savedInstanceState);
 
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference();
-        final StorageReference albumArtRef = storageRef.child("AlbumArt");
-        Glide.with(albumArt).load(albumArtRef.child(snippet.getAlbumArt())).into(albumArt);
-        artistName.setText(snippet.getArtist());
-        songTitle.setText(snippet.getTitle());
-        //songBlurb.setText(snippet.getBlurb());
+        Bundle d_snips = getArguments();
+
 
         View view = inflater.inflate(R.layout.song_details_dialog, container, false);
         artistName = view.findViewById(R.id.details_artist_name);
         songTitle = view.findViewById(R.id.details_song_title);
         albumArt = view.findViewById(R.id.details_album_art);
+
+        // Use d_snips Bundle to access snippet info
+        songTitle.setText(d_snips.getString("songTitle"));
+        artistName.setText(d_snips.getString("artistName"));
+
         return view;
     }
 
@@ -68,4 +71,9 @@ public class SongDetailsDialog extends DialogFragment {
             dialog.getWindow().setLayout(width, height);
         }
     }
+
+
+
+
+
 }
