@@ -100,7 +100,10 @@ public class UserProfileFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
-                    snapshotList = task.getResult().getDocuments();
+                    snapshotList.clear();
+                    List<DocumentSnapshot> tempSnapList = task.getResult().getDocuments();
+                    snapshotList.addAll(tempSnapList);
+                    adapter.notifyDataSetChanged();
                     swipeRefresh.setRefreshing(false);
                 }
             }
