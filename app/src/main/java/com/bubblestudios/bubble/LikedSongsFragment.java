@@ -91,8 +91,9 @@ public class LikedSongsFragment extends Fragment {
                         Bundle snips = new Bundle();
                         snips.putString("songTitle",snippet.getTitle());
                         snips.putString("artistName",snippet.getArtist());
-                        //snips.putString("artist_blurb", snippet.getArtistBlurb());
-                        //snips.putString("song_blurb", snippet.getSong_blurb());
+                        //snips.putString("songBlurb",snippet.getSongBlurb());
+
+                        //snips.putString("songBlurb",snippet.getSongBlurb());
 
                         //Listens for click on each entry in recyclerView entries
                         //Opens new SongDetailsDialog for the clicked entry
@@ -104,7 +105,6 @@ public class LikedSongsFragment extends Fragment {
                     }
                 });
 
-                Snippet snip = snippet;
                 //////
                 holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
@@ -113,7 +113,6 @@ public class LikedSongsFragment extends Fragment {
                         Bundle snips = new Bundle();
                         snips.putString("songTitle",snippet.getTitle());
                         snips.putString("artistName",snippet.getArtist());
-
 
                         //Listens for click on each entry in recyclerView entries
                         //Opens new ArtistDetailsDialog for the clicked entry

@@ -27,7 +27,7 @@ public class SongDetailsDialog extends DialogFragment {
     TextView songTitle;
     ImageView albumArt;
     Snippet snippet;
-    TextView song_blurb;
+    //TextView songBlurb;
 
     public void attachSnippet(Snippet snippet) {
 
@@ -57,7 +57,7 @@ public class SongDetailsDialog extends DialogFragment {
         // Use d_snips Bundle to access snippet info
         songTitle.setText(d_snips.getString("songTitle"));
         artistName.setText(d_snips.getString("artistName"));
-
+        //songTitle.setText(d_snips.getString("SongBlurb"));
         return view;
     }
 

@@ -11,17 +11,21 @@ public class Snippet {
     private String blurb;
     private String snippet;
     private String albumArt;
+    private String artistBlurb;
+    private String songBlurb;
     private List<String> liked_users;
     private List<String> disliked_users;
     @ServerTimestamp private Date timeStamp;
 
-    public Snippet(String title, String artist, /*String blurb,/* String artistRef,*/ String snippet, String albumArt) {
+    public Snippet(String title, String artist, /*String songBlurb,/* String songBlurb,String blurb,/* String artistRef,*/ String snippet, String albumArt) {
         this.title = title;
         this.artist = artist;
         //this.artistRef = artistRef;
-        this.blurb = blurb;
+        //this.blurb = blurb;
         this.snippet = snippet;
         this.albumArt = albumArt;
+        this.artistBlurb = artistBlurb;
+        this.songBlurb = songBlurb;
     }
 
     public Snippet() {}
@@ -40,6 +44,18 @@ public class Snippet {
 
     public void setArtist(String artist) {
         this.artist = artist;
+    }
+
+    public String getArtistBlurb(){
+        return artistBlurb;
+    }
+
+    public String getSongBlurb(){
+        return songBlurb;
+    }
+
+    public void setSongBlurb(String songBlurb){
+        this.songBlurb = songBlurb;
     }
 
     public String getSnippet() {
