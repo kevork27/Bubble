@@ -39,7 +39,7 @@ public class UploadActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private Button uploadAlbumArtButton, uploadSnippetButton, chooseAlbumArtButton, chooseSnippetButton;
     private EditText songTitleEditText, artistNameEditText;
-    private String albumArtFileName, snippetFileName;
+    private String albumArtFileName, snippetFileName, songBlurb="test";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +98,7 @@ public class UploadActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String songTitle = songTitleEditText.getText().toString();
                 String artistName = artistNameEditText.getText().toString();
-                Snippet snippet = new Snippet(songTitle, artistName, snippetFileName, albumArtFileName);
+                Snippet snippet = new Snippet(songTitle, artistName, songBlurb , snippetFileName, albumArtFileName );
 
                 db.collection("snippets").add(snippet).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override

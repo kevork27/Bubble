@@ -91,7 +91,7 @@ public class LikedSongsFragment extends Fragment {
                         Bundle snips = new Bundle();
                         snips.putString("songTitle",snippet.getTitle());
                         snips.putString("artistName",snippet.getArtist());
-                        //snips.putString("songBlurb",snippet.getSongBlurb());
+                        snips.putString("songBlurb",snippet.getSongBlurb());
 
                         //snips.putString("songBlurb",snippet.getSongBlurb());
 
