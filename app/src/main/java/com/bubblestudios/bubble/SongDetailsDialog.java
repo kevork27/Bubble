@@ -57,7 +57,7 @@ public class SongDetailsDialog extends DialogFragment {
         // Use d_snips Bundle to access snippet info
         //songTitle.setText(d_snips.getString("songTitle"));
         artistName.setText(d_snips.getString("artistName"));
-        songTitle.setText(d_snips.getString("SongBlurb"));
+        songTitle.setText(d_snips.getString("songBlurb"));
         return view;
     }
 
