@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
     private ActionBar actionBar;
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
+    private ImageView profileIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         user.getUid();
         Uri photoUrl = user.getPhotoUrl();
-        ImageView profileIcon = findViewById(R.id.profile_icon);
+        profileIcon = findViewById(R.id.profile_icon);
         Glide.with(profileIcon).load(photoUrl).apply(RequestOptions.circleCropTransform()).into(profileIcon);
 
         profileIcon.setOnClickListener(new View.OnClickListener() {
@@ -86,11 +87,14 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
                 switch(i) {
                     case 0:
                         actionBar.setDisplayHomeAsUpEnabled(false);
+                        profileIcon.setVisibility(View.VISIBLE);
                         break;
                     case 1:
                         actionBar.setDisplayHomeAsUpEnabled(true);
+                        profileIcon.setVisibility(View.GONE);
                         break;
                 }
+                invalidateOptionsMenu();
             }
 
             @Override
@@ -121,6 +125,15 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_activity_menu, menu);
+        int pageNum = (viewPager.getCurrentItem());
+        if ( pageNum== 1) {
+            menu.findItem(R.id.menu_search).setVisible(true);
+
+        }
+        else {
+            menu.findItem(R.id.menu_search).setVisible(false);
+        }
+
         return true;
     }
 
