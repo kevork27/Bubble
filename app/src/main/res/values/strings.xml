@@ -18,6 +18,7 @@
 
     <string name="settings">Settings</string>
     <string name="logout">Logout</string>
+    <string name="search">Search</string>
 
     <string-array name="song_genres">
         <item></item>
