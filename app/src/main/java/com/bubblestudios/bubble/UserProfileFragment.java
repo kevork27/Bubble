@@ -22,18 +22,18 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-public class LikedSongsFragment extends Fragment {
+public class UserProfileFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private FirestoreRecyclerAdapter adapter;
 
-    public LikedSongsFragment() {
+    public UserProfileFragment() {
         // Required empty public constructor
     }
 
-    public static LikedSongsFragment newInstance() {
+    public static UserProfileFragment newInstance() {
         //Androidy construction method that returns the fragment to another
-        LikedSongsFragment fragment = new LikedSongsFragment();
+        UserProfileFragment fragment = new UserProfileFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
