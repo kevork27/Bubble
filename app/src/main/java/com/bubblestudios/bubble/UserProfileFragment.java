@@ -81,7 +81,7 @@ public class UserProfileFragment extends Fragment {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     snapshotList = task.getResult().getDocuments();
-                    adapter = new LikedSongAdapter(snapshotList, albumArtRef);
+                    adapter = new LikedSongAdapter(snapshotList, albumArtRef, getContext());
                     likedSongRecyclerView.setAdapter(adapter);
                     adapter.getFilter().filter("");
                 }
