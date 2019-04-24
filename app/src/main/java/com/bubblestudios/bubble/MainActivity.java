@@ -27,7 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import static android.graphics.Color.parseColor;
 
-public class MainActivity extends AppCompatActivity implements CardsFragment.OnFragmentInteractionListener, LikedSongsFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements CardsFragment.OnFragmentInteractionListener, UserProfileFragment.OnFragmentInteractionListener {
 
     private Toolbar toolbar;
     private ActionBar actionBar;
@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
                 case 0:
                     return CardsFragment.newInstance();
                 case 1:
-                    return LikedSongsFragment.newInstance();
+                    return UserProfileFragment.newInstance();
                 default:
                     return null;
             }
