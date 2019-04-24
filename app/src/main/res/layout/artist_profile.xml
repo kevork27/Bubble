@@ -49,7 +49,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="This is text about the artist This is text about the artistThis is text about the artistThis is text about tThis is text about the artistThis is text about the artistThis is text about the artisthe artist"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.109"

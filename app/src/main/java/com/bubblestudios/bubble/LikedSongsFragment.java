@@ -113,7 +113,7 @@ public class LikedSongsFragment extends Fragment {
                         Bundle snips = new Bundle();
                         snips.putString("songTitle",snippet.getTitle());
                         snips.putString("artistName",snippet.getArtist());
-
+                        snips.putString("artistBlurb",snippet.getArtistBlurb());
                         //Listens for click on each entry in recyclerView entries
                         //Opens new ArtistDetailsDialog for the clicked entry
 
