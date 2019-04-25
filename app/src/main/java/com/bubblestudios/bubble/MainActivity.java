@@ -33,20 +33,17 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
     private ActionBar actionBar;
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
-    private ImageView profileIcon;
+    private ImageView profileIcon, logo;
+    private Uri photoUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        toolbar.setLogo(R.drawable.logo);
+        toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        //toolbar.setTitle(string.app_name);
-        //toolbar.setTitleTextColor(parseColor("#FFACFC"));
-        toolbar.setBackgroundColor(parseColor("#560A86"));
+        toolbar.setTitle("");
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         actionBar = getSupportActionBar();
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,10 +54,11 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         user.getUid();
-        Uri photoUrl = user.getPhotoUrl();
-        profileIcon = findViewById(R.id.profile_icon);
-        Glide.with(profileIcon).load(photoUrl).apply(RequestOptions.circleCropTransform()).into(profileIcon);
 
+        photoUrl = user.getPhotoUrl();
+        profileIcon = findViewById(R.id.profile_icon);
+        logo = findViewById(R.id.bubble_logo);
+        Glide.with(profileIcon).load(photoUrl).into(profileIcon);
         profileIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,10 +81,12 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
                     case 0:
                         actionBar.setDisplayHomeAsUpEnabled(false);
                         profileIcon.setVisibility(View.VISIBLE);
+                        logo.setVisibility(View.VISIBLE);
                         break;
                     case 1:
                         actionBar.setDisplayHomeAsUpEnabled(true);
                         profileIcon.setVisibility(View.GONE);
+                        logo.setVisibility(View.GONE);
                         break;
                 }
                 invalidateOptionsMenu();

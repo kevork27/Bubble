@@ -49,8 +49,6 @@ public class UploadActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.upload_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        //toolbar.setLogo(R.drawable.logo);
-        toolbar.setBackgroundColor(parseColor("#560A86"));
         toolbar.setTitle(R.string.upload);
 
         ActionBar actionBar = getSupportActionBar();
