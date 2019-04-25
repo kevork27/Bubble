@@ -33,14 +33,14 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
     private ActionBar actionBar;
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
-    private ImageView profileIcon;
+    private ImageView profileIcon, logo;
     private Uri photoUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("");
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
 
         photoUrl = user.getPhotoUrl();
         profileIcon = findViewById(R.id.profile_icon);
+        logo = findViewById(R.id.bubble_logo);
         Glide.with(profileIcon).load(photoUrl).into(profileIcon);
         profileIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,10 +81,12 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
                     case 0:
                         actionBar.setDisplayHomeAsUpEnabled(false);
                         profileIcon.setVisibility(View.VISIBLE);
+                        logo.setVisibility(View.VISIBLE);
                         break;
                     case 1:
                         actionBar.setDisplayHomeAsUpEnabled(true);
                         profileIcon.setVisibility(View.GONE);
+                        logo.setVisibility(View.GONE);
                         break;
                 }
                 invalidateOptionsMenu();
