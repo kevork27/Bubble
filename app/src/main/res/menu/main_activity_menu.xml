@@ -12,8 +12,12 @@
         android:title="@string/settings"
         app:showAsAction="never"/>
     <item
-        android:id="@+id/menu_upload_button"
-        android:title="@string/upload"
+        android:id="@+id/menu_upload_snippet_button"
+        android:title="@string/upload_snippet"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_upload_artist_button"
+        android:title="@string/upload_artist"
         app:showAsAction="never"/>
     <item
         android:id="@+id/menu_logout_button"

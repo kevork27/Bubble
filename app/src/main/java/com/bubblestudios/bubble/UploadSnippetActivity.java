@@ -18,17 +18,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import static android.graphics.Color.parseColor;
-
-public class UploadActivity extends AppCompatActivity {
+public class UploadSnippetActivity extends AppCompatActivity {
 
     private int PICK_IMAGE_REQUEST = 1;
     private int PICK_AUDIO_REQUEST = 2;
@@ -39,7 +35,7 @@ public class UploadActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private Button uploadAlbumArtButton, uploadSnippetButton, chooseAlbumArtButton, chooseSnippetButton;
     private EditText songTitleEditText, artistNameEditText;
-    private String albumArtFileName, snippetFileName, songBlurb="test", artistBlurb = "test", artistArtFilename;
+    private String albumArtFileName, snippetFileName, songBlurb="test", artistBlurb = "test";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +45,7 @@ public class UploadActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.upload_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        toolbar.setTitle(R.string.upload);
+        toolbar.setTitle(R.string.upload_snippet);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -60,7 +56,7 @@ public class UploadActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         songTitleEditText = findViewById(R.id.song_title_editText);
-        artistNameEditText = findViewById(R.id.artist_name_editText);
+        artistNameEditText = findViewById(R.id.artist_upload_name_editText);
         chooseAlbumArtButton = findViewById(R.id.choose_album_art_button);
         chooseAlbumArtButton.setOnClickListener(new View.OnClickListener() {
             @Override

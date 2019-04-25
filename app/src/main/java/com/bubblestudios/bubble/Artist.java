@@ -15,8 +15,9 @@ public class Artist {
     private Date timeStamp;
 
 
-public Artist(String artistName, String artistArt) {
+public Artist(String artistName, String artistBlurb, String artistArt) {
     this.artistName = artistName;
+    this.artistBlurb = artistBlurb;
     this.artistArt = artistArt;
 }
 

@@ -18,14 +18,11 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import static android.graphics.Color.parseColor;
 
 public class MainActivity extends AppCompatActivity implements CardsFragment.OnFragmentInteractionListener, UserProfileFragment.OnFragmentInteractionListener {
 
@@ -138,9 +135,13 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
             case R.id.menu_settings_button:
                 //settings menu
                 return true;
-            case R.id.menu_upload_button:
-                Intent intent = new Intent(this, UploadActivity.class);
+            case R.id.menu_upload_snippet_button:
+                Intent intent = new Intent(this, UploadSnippetActivity.class);
                 startActivity(intent);
+                return true;
+            case R.id.menu_upload_artist_button:
+                Intent intent2 = new Intent(this, UploadArtistActivity.class);
+                startActivity(intent2);
                 return true;
             case R.id.menu_logout_button:
                 AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
