@@ -1,5 +1,6 @@
 package com.bubblestudios.bubble;
 
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.ServerTimestamp;
 
 import java.util.Date;
@@ -14,11 +15,12 @@ public class Snippet {
     private String artistArt;
     private String artistBlurb;
     private String songBlurb;
+    private DocumentReference artistRef;
     private List<String> liked_users;
     private List<String> disliked_users;
     @ServerTimestamp private Date timeStamp;
 
-    public Snippet(String title, String artist, String songBlurb, String artistBlurb,/* String songBlurb,String blurb,/* String artistRef,*/ String snippet, String albumArt, String artistArt) {
+    public Snippet(String title, String artist, String songBlurb, String artistBlurb,/* String songBlurb,String blurb,/* String artistRef,*/ String snippet, String albumArt, String artistArt /*DocumentReference artistRef()*/) {
         this.title = title;
         this.artist = artist;
         //this.artistRef = artistRef;
@@ -28,7 +30,8 @@ public class Snippet {
         this.artistBlurb = artistBlurb;
         this.songBlurb = songBlurb;
         this.artistArt = artistArt;
-    }
+        //this.artistRef = artistRef;
+        }
 
     public Snippet() {}
 
@@ -118,6 +121,14 @@ public class Snippet {
 
     public void setDisliked_users(List<String> disliked_users) {
         this.disliked_users = disliked_users;
+    }
+
+    public DocumentReference getArtistRef() {
+        return artistRef;
+    }
+
+    public void setArtistRef(DocumentReference artistRef) {
+        this.artistRef = artistRef;
     }
 
 }
