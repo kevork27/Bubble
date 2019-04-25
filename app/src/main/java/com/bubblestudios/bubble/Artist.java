@@ -8,7 +8,9 @@ import java.util.List;
 
 public class Artist {
 
-    private String artistName, artistArt;
+    private String artistName;
+    private String artistArt;
+    private String artistBlurb;
     @ServerTimestamp
     private Date timeStamp;
 
@@ -42,6 +44,13 @@ public Artist(String artistName, String artistArt) {
         this.timeStamp = timeStamp;
     }
 
+    public String getArtistBlurb() {
+        return artistBlurb;
+    }
+
+    public void setArtistBlurb(String artistBlurb) {
+        this.artistBlurb = artistBlurb;
+    }
 
 }
 

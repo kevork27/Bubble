@@ -58,7 +58,7 @@ public class LikedSongAdapter extends RecyclerView.Adapter<LikedSongHolder> impl
         final Bundle aSnips = new Bundle();
         aSnips.putString("songTitle",snippet.getTitle());
         aSnips.putString("artistName",snippet.getArtist());
-        aSnips.putString("artistBlurb",snippet.getArtistBlurb());
+        //aSnips.putString("artistBlurb",snippet.getArtistBlurb()); //moved this to the artist object
         //Gets the artist reference from the snippet
         DocumentReference artistRef = snippet.getArtistRef();
         //Check if it actually exits (we only have one artist right now, so only one song has an artistRef attached)

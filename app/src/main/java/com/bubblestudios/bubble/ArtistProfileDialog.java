@@ -46,7 +46,7 @@ public class ArtistProfileDialog extends DialogFragment {
         artistName = view.findViewById(R.id.name);
 
         artistName.setText(d_snips.getString("artistName"));
-        artistBlurb.setText(d_snips.getString("artistBlurb"));
+        //artistBlurb.setText(d_snips.getString("artistBlurb")); // moved this to the artist object (get it below from artistRef)
 
         //retrieve the reference path from the bundle
         String artistRefPath = d_snips.getString("artistRefPath");
