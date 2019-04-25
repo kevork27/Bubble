@@ -48,17 +48,21 @@ public class LikedSongAdapter extends RecyclerView.Adapter<LikedSongHolder> impl
         holder.artistName.setText(snippet.getArtist());
         Glide.with(holder.albumArt).load(albumArtRef.child(snippet.getAlbumArt())).into(holder.albumArt);
 
+        //Create Bundles so that snippet data can be translated to dialog
+        final Bundle snips = new Bundle();
+        snips.putString("songTitle",snippet.getTitle());
+        snips.putString("artistName",snippet.getArtist());
+        snips.putString("songBlurb",snippet.getSongBlurb());
+
+        final Bundle aSnips = new Bundle();
+        aSnips.putString("songTitle",snippet.getTitle());
+        aSnips.putString("artistName",snippet.getArtist());
+        aSnips.putString("artistBlurb",snippet.getArtistBlurb());
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //Create Bundle so that snippet data can be translated to dialog
-                Bundle snips = new Bundle();
-                snips.putString("songTitle",snippet.getTitle());
-                snips.putString("artistName",snippet.getArtist());
-                snips.putString("songBlurb",snippet.getSongBlurb());
-
-                //snips.putString("songBlurb",snippet.getSongBlurb());
 
                 //Listens for click on each entry in recyclerView entries
                 //Opens new SongDetailsDialog for the clicked entry
@@ -73,16 +77,12 @@ public class LikedSongAdapter extends RecyclerView.Adapter<LikedSongHolder> impl
             @Override
             public boolean onLongClick(View v) {
 
-                Bundle snips = new Bundle();
-                snips.putString("songTitle",snippet.getTitle());
-                snips.putString("artistName",snippet.getArtist());
-                snips.putString("artistBlurb",snippet.getArtistBlurb());
                 //Listens for click on each entry in recyclerView entries
                 //Opens new ArtistDetailsDialog for the clicked entry
 
                 ArtistProfileDialog a_dialog = new ArtistProfileDialog();
                 FragmentTransaction ft = ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();
-                a_dialog.setArguments(snips);
+                a_dialog.setArguments(aSnips);
                 a_dialog.show(ft, ArtistProfileDialog.TAG);
                 return true;
             }

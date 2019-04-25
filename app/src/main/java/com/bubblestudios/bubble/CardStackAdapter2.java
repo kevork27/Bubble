@@ -29,6 +29,7 @@ public class CardStackAdapter2 extends RecyclerView.Adapter<CardViewHolder> impl
     private List<DocumentSnapshot> filteredSnapshotList;
     private StorageReference albumArtRef;
     private StorageReference snippetRef;
+    private StorageReference artistArtRef;
     private SimpleExoPlayer exoPlayer;
     private DataSource.Factory dataSourceFactory;
     private CardsFragment cardsFragment;
@@ -57,7 +58,6 @@ public class CardStackAdapter2 extends RecyclerView.Adapter<CardViewHolder> impl
         holder.songTitle.setText(snippet.getTitle());
         Glide.with(holder.albumArt).load(albumArtRef.child(snippet.getAlbumArt())).into(holder.albumArt);
         holder.snippetRef = filteredSnapshotList.get(i).getReference();
-
         snippetRef.child(snippet.getSnippet()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
