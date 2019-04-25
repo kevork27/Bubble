@@ -14,6 +14,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.storage.StorageReference;
 
@@ -58,7 +59,13 @@ public class LikedSongAdapter extends RecyclerView.Adapter<LikedSongHolder> impl
         aSnips.putString("songTitle",snippet.getTitle());
         aSnips.putString("artistName",snippet.getArtist());
         aSnips.putString("artistBlurb",snippet.getArtistBlurb());
-
+        //Gets the artist reference from the snippet
+        DocumentReference artistRef = snippet.getArtistRef();
+        //Check if it actually exits (we only have one artist right now, so only one song has an artistRef attached)
+        if(artistRef != null) {
+            //put the path (in firestore) of the reference in the bundle
+            aSnips.putString("artistRefPath", artistRef.getPath());
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +84,7 @@ public class LikedSongAdapter extends RecyclerView.Adapter<LikedSongHolder> impl
             @Override
             public boolean onLongClick(View v) {
 
-                //Listens for click on each entry in recyclerView entries
+                //Listens for long click on each entry in recyclerView entries
                 //Opens new ArtistDetailsDialog for the clicked entry
 
                 ArtistProfileDialog a_dialog = new ArtistProfileDialog();

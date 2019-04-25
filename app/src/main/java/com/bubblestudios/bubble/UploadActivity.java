@@ -98,7 +98,7 @@ public class UploadActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String songTitle = songTitleEditText.getText().toString();
                 String artistName = artistNameEditText.getText().toString();
-                Snippet snippet = new Snippet(songTitle, artistName, songBlurb , artistBlurb, snippetFileName, albumArtFileName, artistArtFilename );
+                Snippet snippet = new Snippet(songTitle, artistName, songBlurb , artistBlurb, snippetFileName, albumArtFileName, null);
 
                 db.collection("snippets").add(snippet).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
