@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,6 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -44,6 +46,7 @@ public class UserProfileFragment extends Fragment {
     private List<DocumentSnapshot> snapshotList;
     private SwipeRefreshLayout swipeRefresh;
     private FirebaseUser user;
+    private FrameLayout logo;
 
     public UserProfileFragment() {
         // Required empty public constructor
@@ -66,6 +69,7 @@ public class UserProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -153,6 +157,7 @@ public class UserProfileFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
         super.onCreateOptionsMenu(menu, inflater);
         MenuItem menuItem = menu.findItem(R.id.menu_search);
         Context context = (AppCompatActivity) getActivity();
