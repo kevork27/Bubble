@@ -105,8 +105,6 @@ public class CardStackAdapter2 extends RecyclerView.Adapter<CardViewHolder> impl
                     for(DocumentSnapshot snapshot: snapshotList) {
                         List<String> likedUsersList = snapshot.toObject(Snippet.class).getLiked_users();
                         List<String> dislikedUsersList = snapshot.toObject(Snippet.class).getDisliked_users();
-                        Log.d("filtering", "liked: " + likedUsersList.contains(userID));
-                        Log.d("filtering", "disliked: " + likedUsersList.contains(userID));
                         if(!likedUsersList.contains(userID) && !dislikedUsersList.contains(userID)){
                             tempSnapList.add(snapshot);
                         }

@@ -9,28 +9,23 @@ import java.util.List;
 public class Snippet {
     private String title;
     private String artist;
-    private String blurb;
     private String snippet;
     private String albumArt;
-    private String artistArt;
-    private String artistBlurb;
     private String songBlurb;
     private DocumentReference artistRef;
     private List<String> liked_users;
     private List<String> disliked_users;
     @ServerTimestamp private Date timeStamp;
 
-    public Snippet(String title, String artist, String songBlurb, String artistBlurb,/* String songBlurb,String blurb,/* String artistRef,*/ String snippet, String albumArt, String artistArt /*DocumentReference artistRef()*/) {
+    public Snippet(String title, String artist, String songBlurb, String snippet, String albumArt, List<String> liked_users, List<String> disliked_users, DocumentReference artistRef) {
         this.title = title;
         this.artist = artist;
-        //this.artistRef = artistRef;
-        //this.blurb = blurb;
+        this.songBlurb = songBlurb;
         this.snippet = snippet;
         this.albumArt = albumArt;
-        this.artistBlurb = artistBlurb;
-        this.songBlurb = songBlurb;
-        this.artistArt = artistArt;
-        //this.artistRef = artistRef;
+        this.liked_users = liked_users;
+        this.disliked_users = disliked_users;
+        this.artistRef = artistRef;
         }
 
     public Snippet() {}
@@ -51,14 +46,6 @@ public class Snippet {
         this.artist = artist;
     }
 
-    public String getArtistBlurb(){
-        return artistBlurb;
-    }
-
-    public void setArtistBlurb(String artistBlurb){
-        this.artistBlurb = artistBlurb;
-    }
-
     public String getSongBlurb(){
         return songBlurb;
     }
@@ -75,28 +62,12 @@ public class Snippet {
         this.snippet = snippet;
     }
 
-    public String getBlurb() {
-        return blurb;
-    }
-
-    public void setBlurb(String blurb) {
-        this.blurb = blurb;
-    }
-
     public String getAlbumArt() {
         return albumArt;
     }
 
     public void setAlbumArt(String albumArt) {
         this.albumArt = albumArt;
-    }
-
-    public String getArtistArt(){
-        return artistArt;
-    }
-
-    public void setArtistArt(String artistArt){
-        this.artistArt = artistArt;
     }
 
     public Date getTimeStamp() {
