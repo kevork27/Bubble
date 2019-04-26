@@ -12,7 +12,12 @@
         android:roundIcon="@mipmap/bubble_image_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UploadArtistActivity"></activity>
+        <activity android:name=".UploadArtistActivity"
+            android:parentActivityName=".MainActivity">>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bubblestudios.bubble.MainActivity" />
+        </activity>
         <activity android:name=".ArtistProfile" />
         <activity android:name=".MainActivity" />
         <activity

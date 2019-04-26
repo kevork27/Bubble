@@ -9,7 +9,6 @@ import java.util.List;
 public class Snippet {
     private String title;
     private String artist;
-    private String blurb;
     private String snippet;
     private String albumArt;
     private String songBlurb;
@@ -18,12 +17,14 @@ public class Snippet {
     private List<String> disliked_users;
     @ServerTimestamp private Date timeStamp;
 
-    public Snippet(String title, String artist, String songBlurb, String snippet, String albumArt, DocumentReference artistRef) {
+    public Snippet(String title, String artist, String songBlurb, String snippet, String albumArt, List<String> liked_users, List<String> disliked_users, DocumentReference artistRef) {
         this.title = title;
         this.artist = artist;
         this.songBlurb = songBlurb;
         this.snippet = snippet;
         this.albumArt = albumArt;
+        this.liked_users = liked_users;
+        this.disliked_users = disliked_users;
         this.artistRef = artistRef;
         }
 
@@ -59,14 +60,6 @@ public class Snippet {
 
     public void setSnippet(String snippet) {
         this.snippet = snippet;
-    }
-
-    public String getBlurb() {
-        return blurb;
-    }
-
-    public void setBlurb(String blurb) {
-        this.blurb = blurb;
     }
 
     public String getAlbumArt() {
