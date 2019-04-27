@@ -86,6 +86,8 @@ public class Snippet {
         this.liked_users = liked_users;
     }
 
+    public String getNumberOfLikes() {return Integer.toString(this.liked_users.size());}
+
     public List<String> getDisliked_users() {
         return disliked_users;
     }

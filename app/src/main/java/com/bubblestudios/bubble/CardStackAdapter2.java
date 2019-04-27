@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.google.common.collect.Iterables.size;
+
 public class CardStackAdapter2 extends RecyclerView.Adapter<CardViewHolder> implements Filterable {
 
     private List<DocumentSnapshot> snapshotList;
@@ -56,6 +58,7 @@ public class CardStackAdapter2 extends RecyclerView.Adapter<CardViewHolder> impl
 
         holder.artistName.setText(snippet.getArtist());
         holder.songTitle.setText(snippet.getTitle());
+        holder.likedUsers.setText(snippet.getNumberOfLikes());
         Glide.with(holder.albumArt).load(albumArtRef.child(snippet.getAlbumArt())).into(holder.albumArt);
         holder.snippetRef = filteredSnapshotList.get(i).getReference();
         snippetRef.child(snippet.getSnippet()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
