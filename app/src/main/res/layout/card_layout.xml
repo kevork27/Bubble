@@ -18,30 +18,53 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop" />
 
-    <LinearLayout
+    <TableLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:padding="16dp">
+        android:stretchColumns="0"
+        android:padding="8dp">
 
-        <TextView
-            android:id="@+id/song_title"
-            android:fontFamily="@font/rubik_medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"
-            android:textSize="26sp"/>
+        <TableRow>
 
-        <TextView
-            android:id="@+id/artist_name"
-            android:fontFamily="@font/rubik_light"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/song_title"
+                android:fontFamily="@font/rubik_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:textSize="26sp"/>
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/likes"
+                android:text="7"
+                android:fontFamily="@font/rubik_medium"
+                android:textAlignment="center"
+                android:textColor="@color/trueWhite"
+                android:textSize="18sp"
+                />
+
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/artist_name"
+                android:fontFamily="@font/rubik_light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"/>
+
+            <ImageView
+                android:id="@+id/heart_icon"
+                android:layout_gravity="right"
+                android:src="@drawable/heart"/>
+
+        </TableRow>
+
+    </TableLayout>
 
 </android.support.v7.widget.CardView>
