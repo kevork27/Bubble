@@ -1,6 +1,7 @@
 package com.bubblestudios.bubble;
 
 import android.app.Dialog;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,18 +17,30 @@ import android.widget.Toolbar;
 
 import com.bubblestudios.bubble.R;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.ViewTarget;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.net.URL;
+import java.util.List;
+
+import static android.view.View.X;
 
 public class ArtistProfileDialog extends DialogFragment {
 
     public static String TAG = "SongDetailsDialog";
     TextView artistName;
     TextView artistBlurb;
+    ImageView artistArt;
     DocumentReference artistRef;
+    StorageReference ref;;
+    private Artist artist;
+    private List<DocumentSnapshot> filteredSnapshotList;
+
 
 
     @Override
@@ -44,6 +57,8 @@ public class ArtistProfileDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.artist_profile, container, false);
         artistBlurb = view.findViewById(R.id.description);
         artistName = view.findViewById(R.id.name);
+        artistArt = view.findViewById(R.id.artistArt);
+
 
         artistName.setText(d_snips.getString("artistName"));
         //artistBlurb.setText(d_snips.getString("artistBlurb")); // moved this to the artist object (get it below from artistRef)
@@ -52,11 +67,14 @@ public class ArtistProfileDialog extends DialogFragment {
         String artistRefPath = d_snips.getString("artistRefPath");
         //check if it exists
         if(artistRefPath!=null){
+
             //create a document reference from the path
             //you can get the artist object from here now and then the artistArt from that
             artistRef = FirebaseFirestore.getInstance().document(artistRefPath);
+
         }
 
+//        Glide.with(view).load(artistRef.child(artist.getArtistArt())).into(view.artistArt);
         return view;
     }
 
