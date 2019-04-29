@@ -14,6 +14,7 @@ import org.w3c.dom.Text;
 public class CardViewHolder extends RecyclerView.ViewHolder {
     public TextView artistName;
     public TextView songTitle;
+    public TextView likedUsers;
     public ImageView albumArt;
     public MediaSource audioSource;
     public DocumentReference snippetRef;
@@ -23,5 +24,6 @@ public class CardViewHolder extends RecyclerView.ViewHolder {
         artistName = itemView.findViewById(R.id.artist_name);
         songTitle = itemView.findViewById(R.id.song_title);
         albumArt = itemView.findViewById(R.id.album_art_view);
+        likedUsers = itemView.findViewById(R.id.likes);
     }
 }
