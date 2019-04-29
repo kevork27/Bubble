@@ -15,6 +15,7 @@ public class SongDetailsDialog extends DialogFragment {
     //public TextView songBlurb;
     TextView artistName;
     TextView songTitle;
+    TextView songBlurb;
     ImageView albumArt;
     Snippet snippet;
     //TextView songBlurb;
@@ -40,14 +41,15 @@ public class SongDetailsDialog extends DialogFragment {
 
 
         View view = inflater.inflate(R.layout.song_details_dialog, container, false);
-        artistName = view.findViewById(R.id.details_artist_name);
         songTitle = view.findViewById(R.id.details_song_title);
-        albumArt = view.findViewById(R.id.details_album_art);
+        songBlurb = view.findViewById(R.id.details_song_blurb);
+        artistName = view.findViewById(R.id.details_artist_name);
 
         // Use d_snips Bundle to access snippet info
         //songTitle.setText(d_snips.getString("songTitle"));
+        songBlurb.setText(d_snips.getString("songBlurb"));
+        songTitle.setText(d_snips.getString("songTitle"));
         artistName.setText(d_snips.getString("artistName"));
-        songTitle.setText(d_snips.getString("songBlurb"));
         return view;
     }
 
