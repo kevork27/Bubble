@@ -113,6 +113,13 @@ public class LikedSongAdapter extends RecyclerView.Adapter<LikedSongHolder> impl
         return filteredSnapshotList.get(pos).getReference();
     }
 
+    public void removeItem(int pos) {
+        filteredSnapshotList.remove(pos);
+        notifyDataSetChanged();
+    }
+
+
+
     @Override
     public Filter getFilter() {
         return new Filter() {
