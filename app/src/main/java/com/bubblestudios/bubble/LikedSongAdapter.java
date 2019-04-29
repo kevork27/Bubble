@@ -109,6 +109,10 @@ public class LikedSongAdapter extends RecyclerView.Adapter<LikedSongHolder> impl
         return filteredSnapshotList.get(pos).toObject(Snippet.class);
     }
 
+    public DocumentReference getItemReference(int pos) {
+        return filteredSnapshotList.get(pos).getReference();
+    }
+
     @Override
     public Filter getFilter() {
         return new Filter() {
