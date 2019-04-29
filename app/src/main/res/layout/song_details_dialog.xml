@@ -1,58 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@drawable/bg_gradient"
+    android:gravity="center">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </android.support.v7.widget.Toolbar>
-
-    </android.support.design.widget.AppBarLayout>
-
-    <FrameLayout
-        android:background="#730098"
-        android:layout_width="match_parent"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:scrollbars="vertical"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:id="@+id/instructions_view"
+        android:gravity="center" >
+
 
         <TextView
             android:id="@+id/details_song_title"
-            android:layout_width="380dp"
-            android:textColor="#FFF"
-            android:layout_height="wrap_content" />
-
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/trueGrey"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/rubik"
+            android:text="@string/artist_name"
+            android:gravity="center"
+            android:textSize="45sp"/>
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.054"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent"-->
+        <!--app:layout_constraintVertical_bias="0.056" />-->
 
         <TextView
             android:id="@+id/details_artist_name"
-            android:layout_width="384dp"
-            android:textColor="#FFF"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp" />
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="30dp"
+            android:textColor="@color/trueGrey"
+            android:fontFamily="@font/rubik"
+            android:textSize="25dp"
+            android:gravity="left"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginBottom="30dp" />
 
         <TextView
-            android:id="@+id/xml_title"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/details_album_art"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginStart="8dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-
-    </FrameLayout>
-</android.support.design.widget.CoordinatorLayout>
+            android:id="@+id/details_song_blurb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="30dp"
+            android:textColor="@color/trueGrey"
+            android:fontFamily="@font/rubik"
+            android:textSize="25dp"
+            android:gravity="left"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginBottom="30dp" />
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.109"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent"-->
+        <!--app:layout_constraintVertical_bias="0.498" />-->
+    </LinearLayout>
+</ScrollView>
