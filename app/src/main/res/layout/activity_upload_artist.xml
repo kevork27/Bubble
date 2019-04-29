@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--provides layout to upload an artist page-->
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -17,6 +19,7 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         tools:layout_editor_absoluteX="0dp" />
 
+    <!--area to write down the artist information-->
     <EditText
         android:id="@+id/artist_blurb_editText"
         android:layout_width="wrap_content"
@@ -32,6 +35,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/artist_upload_name_editText" />
 
+    <!--button to chose the artist's profile art-->
     <Button
         android:id="@+id/choose_artist_art_button"
         android:textAllCaps="false"
@@ -46,6 +50,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/artist_blurb_editText" />
 
+    <!--button to actually upload the artist image-->
     <Button
         android:id="@+id/upload_artist_art_button"
         android:textAllCaps="false"
@@ -61,6 +66,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/artist_blurb_editText" />
 
+    <!--button to submit artist profile-->
     <Button
         android:id="@+id/submit_artist_button"
         android:textAllCaps="false"
@@ -77,6 +83,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/choose_artist_art_button" />
 
+    <!--area to type in artist's name-->
     <EditText
         android:id="@+id/artist_upload_name_editText"
         android:layout_width="wrap_content"
