@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--page layout for uploading a song snippet-->
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,6 +8,7 @@
     android:layout_height="match_parent"
     tools:context=".UploadSnippetActivity">
 
+    <!--adds toolbar-->
     <android.support.v7.widget.Toolbar
         android:id="@+id/upload_toolbar"
         android:layout_width="match_parent"
@@ -19,6 +21,7 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         tools:layout_editor_absoluteX="0dp" />
 
+    <!--text-box to add song title-->
     <EditText
         android:id="@+id/song_title_editText"
         android:layout_width="wrap_content"
@@ -33,6 +36,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/upload_toolbar" />
 
+    <!--text-box to add song blurb-->
     <EditText
         android:id="@+id/song_blurb_editText"
         android:layout_width="wrap_content"
@@ -49,6 +53,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/song_title_editText" />
 
+    <!--choose an artist from existing uploaded artists-->
     <Spinner
         android:id="@+id/artist_spinner"
         android:layout_width="wrap_content"
@@ -60,6 +65,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/song_blurb_editText" />
 
+    <!--choose the album art-->
     <Button
         android:id="@+id/choose_album_art_button"
         android:layout_width="wrap_content"
@@ -74,6 +80,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/artist_spinner" />
 
+    <!--upload new album art-->
     <Button
         android:id="@+id/upload_album_art_button"
         android:layout_width="wrap_content"
@@ -89,6 +96,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/artist_spinner" />
 
+    <!--choose the song snippet-->
     <Button
         android:id="@+id/choose_snippet_button"
         android:layout_width="wrap_content"
@@ -103,6 +111,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/choose_album_art_button" />
 
+    <!--upload the song snippet-->
     <Button
         android:id="@+id/upload_snippet_button"
         android:layout_width="wrap_content"
@@ -118,6 +127,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/upload_album_art_button" />
 
+    <!--button to submit the entire song-->
     <Button
         android:id="@+id/submit_button"
         android:layout_width="wrap_content"

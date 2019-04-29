@@ -138,9 +138,6 @@ public class CardsFragment extends Fragment implements CardStackListener {
             }
         });
 
-
-        //adapter.startListening();
-
         return view;
     }
 
@@ -170,7 +167,6 @@ public class CardsFragment extends Fragment implements CardStackListener {
     @Override
     public void onStart() {
         super.onStart();
-        //adapter.startListening();
     }
 
     @Override
@@ -191,7 +187,6 @@ public class CardsFragment extends Fragment implements CardStackListener {
     @Override
     public void onStop() {
         super.onStop();
-        //adapter.stopListening();
         exoPlayer.setPlayWhenReady(false);
     }
 
