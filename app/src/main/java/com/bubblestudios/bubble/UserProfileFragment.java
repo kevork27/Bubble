@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,14 +30,19 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.core.QueryListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
+
+import static com.google.firebase.firestore.FieldValue.arrayRemove;
+import static com.google.firebase.firestore.FieldValue.arrayUnion;
 
 public class UserProfileFragment extends Fragment {
 
@@ -102,6 +108,34 @@ public class UserProfileFragment extends Fragment {
                 refreshData();
             }
         });
+
+        ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder target, int i) {
+
+                int position = target.getAdapterPosition();
+                Snippet snippet = adapter.getItem(position);
+                DocumentReference documentReference = adapter.getItemReference(position);
+                String userID = user.getUid();
+
+                documentReference.update("liked_users", arrayRemove(userID));
+                documentReference.update("disliked_users", arrayUnion(userID));
+
+                adapter.removeItem(position);
+                adapter.notifyDataSetChanged();
+
+
+            }
+        });
+
+
+        helper.attachToRecyclerView(likedSongRecyclerView);
+
 
         return view;
     }
@@ -182,4 +216,7 @@ public class UserProfileFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
+
+
+
 }

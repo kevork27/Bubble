@@ -15,7 +15,8 @@
     <string name="upload_failed">Upload Failed</string>
     <string name="upload_successful">Upload Successful</string>
     <string name="choose_artist_art">Choose Artist Art</string>
-    <string name="artist_blurb_hint">Artist Blurb</string>
+    <string name="artist_blurb_hint">Artist Blurb \n \n \n \n \n </string>
+    <string name="song_blurb_hint">Song Blurb \n \n \n \n \n</string>
     <string name="upload_artist">Upload Artist</string>
     <string name="upload_snippet">Upload Snippet</string>
 
