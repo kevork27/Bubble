@@ -16,6 +16,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder {
     public MediaSource audioSource;
     public DocumentReference snippetRef;
 
+    //Viewholder for the cardstackadapter, contains references to each UI element per card
     public CardViewHolder(final View itemView) {
         super(itemView);
         artistName = itemView.findViewById(R.id.artist_name);

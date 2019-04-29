@@ -23,10 +23,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //instantiate toolbar and set title
         Toolbar toolbar = findViewById(R.id.login_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.app_name);
 
+        //if logged in currently, launch main activity, else start login sequence
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if(auth.getCurrentUser() != null) {
             startActivity(new Intent(this, MainActivity.class));
@@ -39,12 +41,13 @@ public class LoginActivity extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // RC_SIGN_IN is the request code you passed into startActivityForResult(...) when starting the sign in flow.
+        //when activity returns result, check request code
         if (requestCode == GOOGLE_SIGN_IN) {
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
             // Successfully signed in
             if (resultCode == RESULT_OK) {
+                //start main activity
                 Log.d("sign_in", "onActivityResult: do something");
                 startActivity(new Intent(this, MainActivity.class));
                 finish();
@@ -56,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 if (response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
+                    //no internet
                     Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show();
                     return;
                 }

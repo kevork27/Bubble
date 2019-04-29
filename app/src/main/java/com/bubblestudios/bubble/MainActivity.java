@@ -42,11 +42,13 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //instantiate toolbar, disable title
         toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("");
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         actionBar = getSupportActionBar();
+        //enable toolbar click listener for up arrow to change viewpager pages
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,9 +56,10 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
             }
         });
 
+        //get current user object from firebase
         user = FirebaseAuth.getInstance().getCurrentUser();
-        user.getUid();
 
+        //set user profile icon in toolbar
         photoUrl = user.getPhotoUrl();
         profileIcon = findViewById(R.id.profile_icon);
         logo = findViewById(R.id.bubble_logo);
@@ -68,9 +71,11 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
             }
         });
 
+        //create viewpager to load both cardsfragment and userprofilefragment
         viewPager = findViewById(R.id.main_viewPager);
         pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
+        //listen for viewpager page changes
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
@@ -81,16 +86,19 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
             public void onPageSelected(int i) {
                 switch(i) {
                     case 0:
+                        //if on first page, disable toolbar up arrow and make profile icon and logo visible
                         actionBar.setDisplayHomeAsUpEnabled(false);
                         profileIcon.setVisibility(View.VISIBLE);
                         logo.setVisibility(View.VISIBLE);
                         break;
                     case 1:
+                        //if on second page, enable up/back arrow and disable profile icon and logo in toolbar
                         actionBar.setDisplayHomeAsUpEnabled(true);
                         profileIcon.setVisibility(View.GONE);
                         logo.setVisibility(View.GONE);
                         break;
                 }
+                //reset menu items on page change
                 invalidateOptionsMenu();
             }
 
@@ -120,17 +128,18 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        //inflate menu
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_activity_menu, menu);
+        //get viewpager page number
         int pageNum = (viewPager.getCurrentItem());
+        //if on second page, enable search button, else disable
         if ( pageNum== 1) {
             menu.findItem(R.id.menu_search).setVisible(true);
 
-        }
-        else {
+        } else {
             menu.findItem(R.id.menu_search).setVisible(false);
         }
-
         return true;
     }
 
@@ -138,17 +147,20 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.menu_settings_button:
-                //settings menu
+                //settings menu - nothing here yet
                 return true;
             case R.id.menu_upload_snippet_button:
+                //launch upload snippet activity
                 Intent intent = new Intent(this, UploadSnippetActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.menu_upload_artist_button:
+                //launch upload artist activity
                 Intent intent2 = new Intent(this, UploadArtistActivity.class);
                 startActivity(intent2);
                 return true;
             case R.id.menu_logout_button:
+                //logout
                 AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -158,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
                 });
                 return true;
             case R.id.menu_clear_likes:
+                //clear out all likes for user - just for testing purposes, would not be in a release version
                 FirebaseFirestore.getInstance().collection("snippets").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -180,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
 
     }
 
+    //custom pager adapter to initialize fragments
     public static class PagerAdapter extends FragmentPagerAdapter {
         private static int NUM_ITEMS = 2;
 

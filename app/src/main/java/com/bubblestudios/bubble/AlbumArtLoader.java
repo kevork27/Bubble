@@ -11,6 +11,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.InputStream;
 
+//Module registration to use Glide to download an image straight from Firebase into an ImageView
 @GlideModule
 public class AlbumArtLoader extends AppGlideModule {
 
