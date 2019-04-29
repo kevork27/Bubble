@@ -17,10 +17,7 @@ import android.widget.Toolbar;
 import com.bubblestudios.bubble.R;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -58,15 +55,6 @@ public class ArtistProfileDialog extends DialogFragment {
             //create a document reference from the path
             //you can get the artist object from here now and then the artistArt from that
             artistRef = FirebaseFirestore.getInstance().document(artistRefPath);
-            artistRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if(task.isSuccessful()) {
-                        Artist artist = task.getResult().toObject(Artist.class);
-                        //now you can do artist.getWhatever and pass it to glide, or get the blurb, etc.
-                    }
-                }
-            });
         }
 
         return view;
