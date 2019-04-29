@@ -31,7 +31,6 @@ public class CardStackAdapter2 extends RecyclerView.Adapter<CardViewHolder> impl
     private List<DocumentSnapshot> filteredSnapshotList;
     private StorageReference albumArtRef;
     private StorageReference snippetRef;
-    private StorageReference artistArtRef;
     private SimpleExoPlayer exoPlayer;
     private DataSource.Factory dataSourceFactory;
     private CardsFragment cardsFragment;
