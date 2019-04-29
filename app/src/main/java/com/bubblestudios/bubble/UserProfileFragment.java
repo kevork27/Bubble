@@ -78,9 +78,9 @@ public class UserProfileFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser(); //get current user from Firebase
 
-        FirebaseStorage storage = FirebaseStorage.getInstance();
+        FirebaseStorage storage = FirebaseStorage.getInstance(); //getting instance from Firebase
         StorageReference storageRef = storage.getReference();
         final StorageReference albumArtRef = storageRef.child("AlbumArt");
 
@@ -109,35 +109,39 @@ public class UserProfileFragment extends Fragment {
             }
         });
 
+
+        // ItemTouchHelper is used to implement swipe function for RecyclerView
         ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            //This is used to drag items on RecyclerView, as it is not needed we set it to false
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
                 return false;
             }
 
+            //Swipe to delete item from liked songs list
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder target, int i) {
 
-                int position = target.getAdapterPosition();
-                Snippet snippet = adapter.getItem(position);
-                DocumentReference documentReference = adapter.getItemReference(position);
-                String userID = user.getUid();
+                int position = target.getAdapterPosition(); //get adapter position
+                Snippet snippet = adapter.getItem(position); //get snippet at that position
+                DocumentReference documentReference = adapter.getItemReference(position); // generate document reference to Firebase for specific snippet
+                String userID = user.getUid(); //get current user
 
-                documentReference.update("liked_users", arrayRemove(userID));
-                documentReference.update("disliked_users", arrayUnion(userID));
+                documentReference.update("liked_users", arrayRemove(userID)); //remove the current user from the liked_users array for this snippet
+                documentReference.update("disliked_users", arrayUnion(userID));//add the user to disliked_users for the song
 
-                adapter.removeItem(position);
-                adapter.notifyDataSetChanged();
+                adapter.removeItem(position); //remove item from Recyler View
+                adapter.notifyDataSetChanged();//notify the adapter of the change
 
 
             }
         });
 
 
-        helper.attachToRecyclerView(likedSongRecyclerView);
+        helper.attachToRecyclerView(likedSongRecyclerView);//attach this ItemTouchHelper to likedSongRecyclerview
 
 
-        return view;
+        return view; //displays the Recyler View
     }
 
     @Override

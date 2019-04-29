@@ -6,24 +6,28 @@ import com.google.firebase.firestore.ServerTimestamp;
 import java.util.Date;
 import java.util.List;
 
+
+//class artist contains the artist information
 public class Artist {
 
     private String artistName;
     private String artistArt;
-    private String artistBlurb;
+    private String artistBlurb; //description of artist
     @ServerTimestamp
     private Date timeStamp;
 
-
+    //default constructor with no arguments
     public Artist() {
     }
 
+    //constructor with arguments
     public Artist(String artistName, String artistBlurb, String artistArt) {
     this.artistName = artistName;
     this.artistBlurb = artistBlurb;
     this.artistArt = artistArt;
 }
 
+    //get and set functions for methods
     public String getArtistName() {
         return artistName;
     }
