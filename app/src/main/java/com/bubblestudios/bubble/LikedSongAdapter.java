@@ -26,6 +26,7 @@ public class LikedSongAdapter extends RecyclerView.Adapter<LikedSongHolder> impl
     private List<DocumentSnapshot> snapshotList;
     private List<DocumentSnapshot> filteredSnapshotList;
     private StorageReference albumArtRef;
+    public StorageReference artistStorageRef;
     private Snippet snippet;
     private Context context;
 
@@ -77,6 +78,8 @@ public class LikedSongAdapter extends RecyclerView.Adapter<LikedSongHolder> impl
                 FragmentTransaction ft = ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();
                 dialog.setArguments(snips);
                 dialog.show(ft, SongDetailsDialog.TAG);
+
+                
 
             }
         });

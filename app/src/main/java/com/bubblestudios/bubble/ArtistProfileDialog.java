@@ -17,10 +17,17 @@ import android.widget.Toolbar;
 import com.bubblestudios.bubble.R;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.List;
+
+import io.grpc.Context;
 
 public class ArtistProfileDialog extends DialogFragment {
 
@@ -28,6 +35,8 @@ public class ArtistProfileDialog extends DialogFragment {
     TextView artistName;
     TextView artistBlurb;
     DocumentReference artistRef;
+    StorageReference artistStorageRef;
+    public ImageView artistArt;
 
 
     @Override
@@ -38,27 +47,61 @@ public class ArtistProfileDialog extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+       // Artist artist = snapshotList.get(i).toObject(Artist.class);
         super.onCreateView(inflater, container, savedInstanceState);
         Bundle d_snips = getArguments();
-        View view = inflater.inflate(R.layout.artist_profile, container, false);
+        final View view = inflater.inflate(R.layout.artist_profile, container, false);
         artistBlurb = view.findViewById(R.id.description);
         artistName = view.findViewById(R.id.name);
+        artistArt = view.findViewById(R.id.artistArt);
+
+
 
         artistName.setText(d_snips.getString("artistName"));
         //artistBlurb.setText(d_snips.getString("artistBlurb")); // moved this to the artist object (get it below from artistRef)
 
         //retrieve the reference path from the bundle
         String artistRefPath = d_snips.getString("artistRefPath");
+
+
         //check if it exists
         if(artistRefPath!=null){
             //create a document reference from the path
             //you can get the artist object from here now and then the artistArt from that
             artistRef = FirebaseFirestore.getInstance().document(artistRefPath);
+            artistRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if(task.isSuccessful()) {
+                        final Artist artist = task.getResult().toObject(Artist.class);
+                        //now you can do artist.getWhatever and pass it to glide, or get the blurb, etc.
+
+                        //Set artist blurb text
+                        artistBlurb.setText(artist.getArtistBlurb());
+
+                        //Put image into holder via glide
+
+                        //The commented Glide below is the correct glide syntax, but I cannot figure out how to get artist Storage Ref into this scope.
+                        //I know that I should establish artistStorageRef in Liked song adapter, as you have in CardStackAdapter2, but I am not sure how to
+                        //declare that in LikedSongAdapter and then bundle into ArtistProfileDialog
+                       // Glide.with(view.findViewById(R.id.artistArt)).load(artistStorageRef.child(artist.getArtistArt())).placeholder(R.drawable.icon).into(artistArt);
+
+
+                        //Temporary Glide with placeholder
+                        Glide.with(view.findViewById(R.id.artistArt)).load(artist.getArtistArt()).placeholder(R.drawable.icon).into(artistArt);
+
+                    }
+                }
+
+            });
+
         }
 
         return view;
     }
+
+
+
 
     @Override
     public void onStart() {
