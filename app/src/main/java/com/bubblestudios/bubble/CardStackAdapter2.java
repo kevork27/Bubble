@@ -55,6 +55,7 @@ public class CardStackAdapter2 extends RecyclerView.Adapter<CardViewHolder> impl
 
         holder.artistName.setText(snippet.getArtist());
         holder.songTitle.setText(snippet.getTitle());
+
         Glide.with(holder.albumArt).load(albumArtRef.child(snippet.getAlbumArt())).into(holder.albumArt);
         holder.snippetRef = filteredSnapshotList.get(i).getReference();
         snippetRef.child(snippet.getSnippet()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
