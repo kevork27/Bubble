@@ -30,7 +30,7 @@ import java.util.List;
 import io.grpc.Context;
 
 public class ArtistProfileDialog extends DialogFragment {
-
+//Establish necessary variables for Artist Profile Dialog
     public static String TAG = "SongDetailsDialog";
     TextView artistName;
     TextView artistBlurb;
@@ -38,27 +38,32 @@ public class ArtistProfileDialog extends DialogFragment {
     StorageReference artistStorageRef;
     public ImageView artistArt;
 
-
+//Assign dialog type (normal and fullscreen)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialogStyle);
     }
 
+    //On create view, establish inflater reference as well as necessary bundles
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-       // Artist artist = snapshotList.get(i).toObject(Artist.class);
         super.onCreateView(inflater, container, savedInstanceState);
+
+        //Unpackage bundle to reference snippet data for relevant data projection
         Bundle d_snips = getArguments();
+
+        //View xml (artist_profile) via inflater, and establish elements within the xml to their R.id.values
         final View view = inflater.inflate(R.layout.artist_profile, container, false);
         artistBlurb = view.findViewById(R.id.description);
         artistName = view.findViewById(R.id.name);
         artistArt = view.findViewById(R.id.artistArt);
 
+        //Reference Firebase in order to fetch the artist art image
         artistStorageRef = FirebaseStorage.getInstance().getReference().child("ArtistArt");
 
+        //Retrieve the artist name from bundle
         artistName.setText(d_snips.getString("artistName"));
-        //artistBlurb.setText(d_snips.getString("artistBlurb")); // moved this to the artist object (get it below from artistRef)
 
         //retrieve the reference path from the bundle
         String artistRefPath = d_snips.getString("artistRefPath");
@@ -79,16 +84,10 @@ public class ArtistProfileDialog extends DialogFragment {
                         //Set artist blurb text
                         artistBlurb.setText(artist.getArtistBlurb());
 
-                        //Put image into holder via glide
 
-                        //The commented Glide below is the correct glide syntax, but I cannot figure out how to get artist Storage Ref into this scope.
-                        //I know that I should establish artistStorageRef in Liked song adapter, as you have in CardStackAdapter2, but I am not sure how to
-                        //declare that in LikedSongAdapter and then bundle into ArtistProfileDialog
+                        //Use Glide to load artistArt image into the artistArt reference of xml artist_profile.xml
                         Glide.with(view.findViewById(R.id.artistArt)).load(artistStorageRef.child(artist.getArtistArt())).placeholder(R.drawable.icon).into(artistArt);
 
-
-                        //Temporary Glide with placeholder
-                        //Glide.with(view.findViewById(R.id.artistArt)).load(artist.getArtistArt()).placeholder(R.drawable.icon).into(artistArt);
 
                     }
                 }
