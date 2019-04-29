@@ -1,10 +1,8 @@
 package com.bubblestudios.bubble;
 
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.ServerTimestamp;
 
 import java.util.Date;
-import java.util.List;
 
 public class Artist {
 

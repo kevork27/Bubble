@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -137,9 +136,7 @@ public class LikedSongAdapter extends RecyclerView.Adapter<LikedSongHolder> impl
                         Snippet snippet = snapshot.toObject(Snippet.class);
                         String songTitle = snippet.getTitle();
                         String artistName = snippet.getArtist();
-                        Log.d("filterquery", "performFiltering: " + songTitle + " " + artistName);
                         if (songTitle.toLowerCase().contains(searchString) || artistName.toLowerCase().contains(searchString)) {
-                            Log.d("filterquery2", "performFiltering: " + songTitle);
                             tempSnapList.add(snapshot);
                         }
                     }

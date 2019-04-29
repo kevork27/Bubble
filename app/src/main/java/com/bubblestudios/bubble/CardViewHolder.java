@@ -6,10 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.firebase.firestore.DocumentReference;
-
-import org.w3c.dom.Text;
 
 public class CardViewHolder extends RecyclerView.ViewHolder {
     public TextView artistName;

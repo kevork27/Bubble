@@ -3,7 +3,6 @@ package com.bubblestudios.bubble;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +19,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import static com.google.common.collect.Iterables.size;
 
 public class CardStackAdapter2 extends RecyclerView.Adapter<CardViewHolder> implements Filterable {
 
