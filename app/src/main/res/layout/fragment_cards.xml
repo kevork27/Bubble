@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--provides layout of swipe cards for each song-->
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -19,6 +21,7 @@
         android:padding="32dp"
         app:layout_constraintBottom_toTopOf="@+id/like_button">
 
+        <!--imported cardstack view-->
         <com.yuyakaido.android.cardstackview.CardStackView
             android:id="@+id/card_view"
             android:layout_width="match_parent"
@@ -26,6 +29,7 @@
 
     </RelativeLayout>
 
+    <!--button to dislike the song-->
     <Button
         android:id="@+id/dislike_button"
         android:layout_width="wrap_content"
@@ -36,6 +40,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <!--button to pause and play the song-->
     <Button
         android:id="@+id/pause_play_button"
         android:layout_width="wrap_content"
@@ -47,6 +52,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/relativeLayout" />
 
+    <!--button to like the song-->
     <Button
         android:id="@+id/like_button"
         android:layout_width="wrap_content"

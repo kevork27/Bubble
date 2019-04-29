@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--layout of main activity-->
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,6 +8,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!--adds the toolbar to the main activity-->
     <android.support.v7.widget.Toolbar
         android:id="@+id/main_toolbar"
         android:layout_width="match_parent"
@@ -17,6 +20,7 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         tools:layout_editor_absoluteX="0dp">
 
+        <!--includes the Bubble logo at the top of the page-->
         <ImageView
             android:id="@+id/bubble_logo"
             android:src="@drawable/logo4x"
@@ -25,6 +29,7 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center"/>
 
+        <!--includes the profiles icon and icon image-->
         <FrameLayout
             android:padding="8dp"
             android:layout_width="80dp"
