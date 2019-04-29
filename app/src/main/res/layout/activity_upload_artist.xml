@@ -71,6 +71,7 @@
         android:layout_marginTop="32dp"
         android:fontFamily="@font/rubik"
         android:text="@string/submit"
+        android:enabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

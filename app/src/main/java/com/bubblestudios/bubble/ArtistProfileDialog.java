@@ -55,7 +55,7 @@ public class ArtistProfileDialog extends DialogFragment {
         artistName = view.findViewById(R.id.name);
         artistArt = view.findViewById(R.id.artistArt);
 
-
+        artistStorageRef = FirebaseStorage.getInstance().getReference().child("ArtistArt");
 
         artistName.setText(d_snips.getString("artistName"));
         //artistBlurb.setText(d_snips.getString("artistBlurb")); // moved this to the artist object (get it below from artistRef)
@@ -84,11 +84,11 @@ public class ArtistProfileDialog extends DialogFragment {
                         //The commented Glide below is the correct glide syntax, but I cannot figure out how to get artist Storage Ref into this scope.
                         //I know that I should establish artistStorageRef in Liked song adapter, as you have in CardStackAdapter2, but I am not sure how to
                         //declare that in LikedSongAdapter and then bundle into ArtistProfileDialog
-                       // Glide.with(view.findViewById(R.id.artistArt)).load(artistStorageRef.child(artist.getArtistArt())).placeholder(R.drawable.icon).into(artistArt);
+                        Glide.with(view.findViewById(R.id.artistArt)).load(artistStorageRef.child(artist.getArtistArt())).placeholder(R.drawable.icon).into(artistArt);
 
 
                         //Temporary Glide with placeholder
-                        Glide.with(view.findViewById(R.id.artistArt)).load(artist.getArtistArt()).placeholder(R.drawable.icon).into(artistArt);
+                        //Glide.with(view.findViewById(R.id.artistArt)).load(artist.getArtistArt()).placeholder(R.drawable.icon).into(artistArt);
 
                     }
                 }

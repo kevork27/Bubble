@@ -226,6 +226,11 @@ public class CardsFragment extends Fragment implements CardStackListener {
         } else if(direction == Direction.Left) {
             db.collection("snippets").document(snippetRef.getId()).update("disliked_users", FieldValue.arrayUnion(userID));
         }
+
+        if(layoutManager.getTopPosition() == adapter.getItemCount()) {
+            //refresh
+            //show something saying no more songs
+        }
     }
 
     @Override
@@ -237,8 +242,6 @@ public class CardsFragment extends Fragment implements CardStackListener {
     public void onCardCanceled() {
 
     }
-
-
 
     @Override
     public void onCardAppeared(View view, int position) {
