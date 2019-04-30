@@ -1,14 +1,26 @@
 package com.bubblestudios.bubble;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -115,11 +127,17 @@ public class CardsFragment extends Fragment implements CardStackListener {
         cardStackView.setLayoutManager(layoutManager);
 
         //Instantiate pause/play button and set on click listener to toggle pause/play
-        final Button pausePlayButton = view.findViewById(R.id.pause_play_button);
+        final ImageButton pausePlayButton = view.findViewById(R.id.pause_play_button);
         pausePlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 exoPlayer.setPlayWhenReady(!exoPlayer.getPlayWhenReady());
+//              //This initiates transition for color animation of button within onclick method
+                Drawable drawable = pausePlayButton.getDrawable();
+                if(drawable instanceof TransitionDrawable){
+                    ((TransitionDrawable) drawable).startTransition(2000);
+                    ((TransitionDrawable) drawable).reverseTransition(500);
+                }
             }
         });
 
@@ -128,19 +146,43 @@ public class CardsFragment extends Fragment implements CardStackListener {
         final SwipeAnimationSetting dislikeSetting = new SwipeAnimationSetting.Builder().setDirection(Direction.Left).setDuration(Duration.Normal.duration).build();
 
         //instantiate like/dislike buttons and set to trigger corresponding swipe
-        Button likeButton = view.findViewById(R.id.like_button);
+        final ImageButton likeButton = view.findViewById(R.id.like_button);
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Drawable drawable = likeButton.getDrawable();
+
+                if(drawable instanceof TransitionDrawable){
+                    ((TransitionDrawable) drawable).startTransition(2000);
+                    ((TransitionDrawable) drawable).reverseTransition(500);
+                }
+                final Animation myAnim = AnimationUtils.loadAnimation(getContext(),R.anim.blowup);
+                final MediaPlayer mp_like = MediaPlayer.create(getContext(), R.raw.bubble_blow);
+                //This starts both the sound effects as well as scaling animation simultaneously with transition
+                mp_like.start();
+                likeButton.startAnimation(myAnim);
+
                 layoutManager.setSwipeAnimationSetting(likeSetting);
                 cardStackView.swipe();
             }
         });
 
-        Button dislikeButton = view.findViewById(R.id.dislike_button);
+
+        final ImageButton dislikeButton = view.findViewById(R.id.dislike_button);
         dislikeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Drawable drawable = dislikeButton.getDrawable();
+                if(drawable instanceof TransitionDrawable){
+                    ((TransitionDrawable) drawable).startTransition(2000);
+                    ((TransitionDrawable) drawable).reverseTransition(500);
+                }
+                final Animation myAnim = AnimationUtils.loadAnimation(getContext(),R.anim.pop);
+                final MediaPlayer mp_dislike = MediaPlayer.create(getContext(),R.raw.bubble_pop);
+                dislikeButton.startAnimation(myAnim);
+                mp_dislike.start();
+                //Here, same as above, the animation variables and sound effects are activated in onclick method
+
                 layoutManager.setSwipeAnimationSetting(dislikeSetting);
                 cardStackView.swipe();
             }
