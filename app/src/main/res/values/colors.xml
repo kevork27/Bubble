@@ -8,4 +8,5 @@
     <color name="bubblePink">#FF61BE</color>
     <color name="bubbleDark">#35212A</color>
     <color name="bubbleBlue">#3B55CE</color>
+    <color name="transparentGrey">#804D4D4D</color>
 </resources>

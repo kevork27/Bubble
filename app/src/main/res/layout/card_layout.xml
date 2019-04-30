@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:stretchColumns="0"
+        android:background="@color/transparentGrey"
         android:padding="8dp">
 
         <TableRow>
