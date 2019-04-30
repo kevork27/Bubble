@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+//custom viewpager that disables swiping and requires programmatic (button) page changes
 public class TouchDisabledViewPager extends ViewPager {
     public TouchDisabledViewPager(@NonNull Context context) {
         super(context);

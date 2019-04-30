@@ -5,13 +5,16 @@
     android:id="@+id/frameLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bubbleBlue"
     tools:context=".UserProfileFragment">
 
+    <!--adds a swipe to refresh functionality to your profile so it can connect to firestore-->
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/swipe_refresh">
 
+        <!--makes the list of liked songs scrollable-->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/user_profile_recyclerView"
             android:layout_width="match_parent"

@@ -13,6 +13,7 @@ public class LikedSongHolder extends RecyclerView.ViewHolder {
     public TextView songTitle;
     public ImageView albumArt;
 
+    //Viewholder for the likedsongadapter, contains references to each UI element per card
     public LikedSongHolder(@NonNull View itemView) {
         super(itemView);
         artistName = itemView.findViewById(R.id.liked_artist_name);

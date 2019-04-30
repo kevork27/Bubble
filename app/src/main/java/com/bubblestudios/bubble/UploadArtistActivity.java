@@ -5,11 +5,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -64,7 +64,7 @@ public class UploadArtistActivity extends AppCompatActivity {
         uploadArtistArtButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uploadAlbumArt();
+                uploadArtistArt();
             }
         });
         submitArtistButton = findViewById(R.id.submit_artist_button);
@@ -89,6 +89,7 @@ public class UploadArtistActivity extends AppCompatActivity {
                         artistNameEditText.setText("");
                         artistBlurbEditText.setText("");
                         Toast.makeText(getApplicationContext(), "Submitted Successfully", Toast.LENGTH_SHORT).show();
+                        submitArtistButton.setEnabled(false);
                     }
                 });
             }
@@ -115,15 +116,16 @@ public class UploadArtistActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
-    private void uploadAlbumArt() {
+    private void uploadArtistArt() {
         if(artistArtFilePath != null) {
             uploadArtistArtButton.setText(R.string.uploading);
-            StorageReference ref = storageReference.child("AlbumArt/" + artistArtFileName);
+            StorageReference ref = storageReference.child("ArtistArt/" + artistArtFileName);
             ref.putFile(artistArtFilePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     uploadArtistArtButton.setText(R.string.upload_successful);
                     uploadArtistArtButton.setTextColor(Color.GREEN);
+                    submitArtistButton.setEnabled(true);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

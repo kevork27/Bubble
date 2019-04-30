@@ -3,7 +3,6 @@ package com.bubblestudios.bubble;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CardStackAdapter2 extends RecyclerView.Adapter<CardViewHolder> implements Filterable {
@@ -29,12 +27,12 @@ public class CardStackAdapter2 extends RecyclerView.Adapter<CardViewHolder> impl
     private List<DocumentSnapshot> filteredSnapshotList;
     private StorageReference albumArtRef;
     private StorageReference snippetRef;
-    private StorageReference artistArtRef;
     private SimpleExoPlayer exoPlayer;
     private DataSource.Factory dataSourceFactory;
     private CardsFragment cardsFragment;
     private int firstLoad = 0;
 
+    //constructor that sets each field to local variable
     public CardStackAdapter2(List<DocumentSnapshot> snapshotList, StorageReference albumArtRef, StorageReference snippetRef, SimpleExoPlayer exoPlayer, DataSource.Factory dataSourceFactory, CardsFragment cardsFragment) {
         this.snapshotList = snapshotList;
         this.albumArtRef = albumArtRef;
@@ -47,15 +45,19 @@ public class CardStackAdapter2 extends RecyclerView.Adapter<CardViewHolder> impl
     @NonNull
     @Override
     public CardViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        //inflate layout
         return new CardViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_layout, viewGroup, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull final CardViewHolder holder, int i) {
+        //get corresponding song for each card
         Snippet snippet = filteredSnapshotList.get(i).toObject(Snippet.class);
 
+        //get values from snippet and set layout per card
         holder.artistName.setText(snippet.getArtist());
         holder.songTitle.setText(snippet.getTitle());
+        holder.likedUsers.setText(snippet.getNumberOfLikes());
         Glide.with(holder.albumArt).load(albumArtRef.child(snippet.getAlbumArt())).into(holder.albumArt);
         holder.snippetRef = filteredSnapshotList.get(i).getReference();
         snippetRef.child(snippet.getSnippet()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -70,7 +72,7 @@ public class CardStackAdapter2 extends RecyclerView.Adapter<CardViewHolder> impl
                 }
             }
         });
-
+        //on card click toggle music pause/play
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,6 +83,7 @@ public class CardStackAdapter2 extends RecyclerView.Adapter<CardViewHolder> impl
 
     @Override
     public int getItemCount() {
+        //if the list of songs is not null return the size
         if(filteredSnapshotList == null) {
             return 0;
         } else {
@@ -89,9 +92,11 @@ public class CardStackAdapter2 extends RecyclerView.Adapter<CardViewHolder> impl
     }
 
     public Snippet getItem(int pos) {
+        //return the actual item given position
         return filteredSnapshotList.get(pos).toObject(Snippet.class);
     }
 
+    //filter the list of songs by userID contained in liked_songs/disliked_songs so only previously unseen songs are shown
     @Override
     public Filter getFilter() {
         return new Filter() {

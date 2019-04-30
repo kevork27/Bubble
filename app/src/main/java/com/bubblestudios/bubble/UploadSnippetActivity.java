@@ -5,11 +5,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,7 +27,6 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -45,9 +44,9 @@ public class UploadSnippetActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private FirebaseFirestore db;
-    private Button uploadAlbumArtButton, uploadSnippetButton, chooseAlbumArtButton, chooseSnippetButton;
-    private EditText songTitleEditText;
-    private String albumArtFileName, snippetFileName, songBlurb="test", artistBlurb = "test", artistName;
+    private Button uploadAlbumArtButton, uploadSnippetButton, chooseAlbumArtButton, chooseSnippetButton, submitButton;
+    private EditText songTitleEditText, songBlurbEditText;
+    private String albumArtFileName, snippetFileName, artistName;
     private Spinner artistSpinner;
     private ArrayAdapter<String> spinnerAdapter;
     private List<String> artistNames, liked_users = new ArrayList<>(), disliked_users = new ArrayList<>();
@@ -73,6 +72,7 @@ public class UploadSnippetActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         songTitleEditText = findViewById(R.id.song_title_editText);
+        songBlurbEditText = findViewById(R.id.song_blurb_editText);
         chooseAlbumArtButton = findViewById(R.id.choose_album_art_button);
         chooseAlbumArtButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,11 +102,12 @@ public class UploadSnippetActivity extends AppCompatActivity {
                 uploadSnippet();
             }
         });
-        final Button submitButton = findViewById(R.id.submit_button);
+        submitButton = findViewById(R.id.submit_button);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String songTitle = songTitleEditText.getText().toString();
+                String songBlurb = songBlurbEditText.getText().toString();
                 Snippet snippet = new Snippet(songTitle, artistName, songBlurb , snippetFileName, albumArtFileName, liked_users, disliked_users, artistRef);
 
                 db.collection("snippets").add(snippet).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -123,6 +124,8 @@ public class UploadSnippetActivity extends AppCompatActivity {
                         uploadAlbumArtButton.setEnabled(false);
                         uploadSnippetButton.setEnabled(false);
                         songTitleEditText.setText("");
+                        songBlurbEditText.setText("");
+                        submitButton.setEnabled(false);
                         Toast.makeText(getApplicationContext(), "Submitted Successfully", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -133,7 +136,7 @@ public class UploadSnippetActivity extends AppCompatActivity {
         CollectionReference artistsRef = db.collection("artists");
         artistNames = new ArrayList<>();
         artistRefs = new ArrayList<>();
-        spinnerAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, artistNames);
+        spinnerAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, artistNames);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         artistSpinner.setAdapter(spinnerAdapter);
         artistsRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -228,6 +231,7 @@ public class UploadSnippetActivity extends AppCompatActivity {
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     uploadSnippetButton.setText(R.string.upload_successful);
                     uploadSnippetButton.setTextColor(Color.GREEN);
+                    submitButton.setEnabled(true);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

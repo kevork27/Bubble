@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--colors that the app uses-->
+
 <resources>
     <color name="trueWhite">#F4F4F4</color>
     <color name="trueGrey">#4D4D4D</color>
