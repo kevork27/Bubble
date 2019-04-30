@@ -6,17 +6,19 @@ import com.google.firebase.firestore.ServerTimestamp;
 import java.util.Date;
 import java.util.List;
 
+//class snippet is defined for each song clip, it contains the main characteristics of a song as methods
 public class Snippet {
     private String title;
     private String artist;
     private String snippet;
-    private String albumArt;
-    private String songBlurb;
-    private DocumentReference artistRef;
+    private String albumArt; //picture of album ocover
+    private String songBlurb; // description of the song
+    private DocumentReference artistRef; // reference to the artists in Firebase
     private List<String> liked_users;
     private List<String> disliked_users;
     @ServerTimestamp private Date timeStamp;
 
+    //constructor with arguments
     public Snippet(String title, String artist, String songBlurb, String snippet, String albumArt, List<String> liked_users, List<String> disliked_users, DocumentReference artistRef) {
         this.title = title;
         this.artist = artist;
@@ -28,7 +30,7 @@ public class Snippet {
         this.artistRef = artistRef;
         }
 
-    public Snippet() {}
+    public Snippet() {} // constructor with no arguments
 
     public String getTitle() {
         return title;
