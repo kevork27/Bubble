@@ -12,12 +12,6 @@
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView" />
 
-    <!--adds a settings button-->
-    <item
-        android:id="@+id/menu_settings_button"
-        android:title="@string/settings"
-        app:showAsAction="never"/>
-
     <!--adds a button to go to snippet upload-->
     <item
         android:id="@+id/menu_upload_snippet_button"
