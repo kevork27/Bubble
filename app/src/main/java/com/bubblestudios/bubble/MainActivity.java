@@ -146,9 +146,6 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-            case R.id.menu_settings_button:
-                //settings menu - nothing here yet
-                return true;
             case R.id.menu_upload_snippet_button:
                 //launch upload snippet activity
                 Intent intent = new Intent(this, UploadSnippetActivity.class);
