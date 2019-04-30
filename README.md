@@ -31,7 +31,6 @@ In Android Studio: File -> New -> Project From Version Control -> Git. Enter the
 - Click onto a song to view song info
 - Search a song or artist
 - Swipe left on a song to delete it
-- Clear likes
 - Pull down to refresh
 
 - Logout
