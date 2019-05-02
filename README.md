@@ -1,6 +1,12 @@
 # Bubble
 EC327 Android App for swiping through short song clips (snippets)
 
+## Description:
+Bubble is designed to help up-and-coming music artists gain exposure. Bubble is structurally similar to applications such as Tinder and Bumble. In these matchmaking applications, users swipe through brief profiles of other users. They have the option to “like” users. Users also have a user profile and can access other user profiles. Bubble follows the same structure; however, instead of potential suitors, music artists can post snippets (short clips) of their songs. Listeners can swipe through the songs and like or dislike them. They also have access to the songs that they have liked and they can visit the artist’s profile and the song’s profile. 
+
+## Motivation:
+We made this application for a software engineering course's final project.
+
 ## Prerequisites:
 - Working Android Studio environment
 - Working Android-compatible phone emulator
@@ -15,6 +21,11 @@ Download the ZIP file to the Desktop and open using Android Studio.
 Go to the [Github](https://github.com/MilanParikh/Bubble.git) page and click the link in the top right. This should open a URL which you copy to your clipboard.
 
 In Android Studio: File -> New -> Project From Version Control -> Git. Enter the URL and click "Clone". 
+
+## Built With:
+- Android Studio
+- Firebase
+
 ## Test Cases:
 
 - App opens in main page that shows songs in card stack orientation
@@ -37,3 +48,10 @@ In Android Studio: File -> New -> Project From Version Control -> Git. Enter the
 
 
 - Logout
+
+### Credits:
+- Milan Parikh
+- Jared Lott
+- Nada Naguib
+- Mina Zanna
+- Kevork Hamparian
