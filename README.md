@@ -10,6 +10,7 @@ We made this application for a software engineering course's final project.
 ## Prerequisites:
 - Working Android Studio environment
 - Working Android-compatible phone emulator (Pixel 2, API 28, x86, Android 9.0 with Google Play was used)
+- In order to access our Firebase Firestore you will need to send milanp@bu.edu your SHA-1 key for the project (instructorions for finding your SHA-1 key can be found here: https://stackoverflow.com/questions/39144629/how-to-add-sha-1-to-android-application ). Once you email him the authentication key he can add you to the Firebase project. 
 
 
 ## Instructions:
