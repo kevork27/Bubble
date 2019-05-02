@@ -11,10 +11,12 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -63,6 +65,7 @@ public class CardsFragment extends Fragment implements CardStackListener {
     private String userID;
     private FirebaseFirestore db;
     private int lastPosition = 0;
+    private List<DocumentSnapshot> snapshotList;
 
     public CardsFragment() {
     }
@@ -114,7 +117,7 @@ public class CardsFragment extends Fragment implements CardStackListener {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
-                    List<DocumentSnapshot> snapshotList = task.getResult().getDocuments();
+                    snapshotList = task.getResult().getDocuments();
                     //instantiate adapter and pass data, storage references, music player, etc.
                     adapter = new CardStackAdapter2(snapshotList, albumArtRef, snippetRef, exoPlayer, dataSourceFactory, CardsFragment.this);
                     cardStackView.setAdapter(adapter);
@@ -213,6 +216,37 @@ public class CardsFragment extends Fragment implements CardStackListener {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.menu_refresh_cards) {
+            refreshData();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //essentially tells fragment to look at the menu created in the main activity
+        setHasOptionsMenu(true);
+    }
+
+    public void refreshData() {
+        //gets data from firebase again, replaces adapter data, notifies adapter of update
+        Query query = FirebaseFirestore.getInstance().collection("snippets").orderBy("timeStamp");
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    snapshotList.clear();
+                    List<DocumentSnapshot> tempSnapList = task.getResult().getDocuments();
+                    snapshotList.addAll(tempSnapList);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     @Override

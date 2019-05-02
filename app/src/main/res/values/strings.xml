@@ -24,6 +24,7 @@
     <string name="logout">Logout</string>
     <string name="search">Search</string>
     <string name="clear_likes">Clear Likes</string>
+    <string name="refresh_cards">Refresh Cards</string>
 
     <string name="go_back">Go Back</string>
     <string name="artist_pic">TODO</string>

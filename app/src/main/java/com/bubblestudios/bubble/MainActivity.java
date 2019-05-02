@@ -136,9 +136,11 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnF
         //if on second page, enable search button, else disable
         if ( pageNum== 1) {
             menu.findItem(R.id.menu_search).setVisible(true);
+            menu.findItem(R.id.menu_refresh_cards).setVisible(false);
 
         } else {
             menu.findItem(R.id.menu_search).setVisible(false);
+            menu.findItem(R.id.menu_refresh_cards).setVisible(true);
         }
         return true;
     }

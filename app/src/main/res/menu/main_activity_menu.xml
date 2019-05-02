@@ -33,4 +33,8 @@
         android:id="@+id/menu_clear_likes"
         android:title="@string/clear_likes"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_refresh_cards"
+        android:title="@string/refresh_cards"
+        app:showAsAction="never"/>
 </menu>
