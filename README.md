@@ -1,5 +1,5 @@
 # Bubble
-EC327 Android App for swiping through song snippets
+EC327 Android App for swiping through short song clips (snippets)
 
 ## Prerequisites:
 - Working Android Studio environment
@@ -17,14 +17,16 @@ Go to the [Github](https://github.com/MilanParikh/Bubble.git) page and click the
 In Android Studio: File -> New -> Project From Version Control -> Git. Enter the URL and click "Clone". 
 ## Test Cases:
 
-- Go to upload page
-- Upload an artist profile
-- Upload a snippet
+- App opens in main page that shows songs in card stack orientation
+- Swipe rigth to like and left to dislike a song
+- Pause and play using the pause/play button
+- Tap the heart to like a song and the X to  dislike a song
 
-- Go to card stack
-- Swipe to like and dislike
-- Pause and play
-- Tap to like and dislike
+- Click the settings icon and choose the "Upload artist" button
+- Upload an artist profile
+- Go back and click on the "Upload snippet" button
+- Upload a song and a cover image
+
 
 - Go to liked songs list
 - Hold onto a song to view artist info
