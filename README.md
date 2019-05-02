@@ -9,7 +9,7 @@ We made this application for a software engineering course's final project.
 
 ## Prerequisites:
 - Working Android Studio environment
-- Working Android-compatible phone emulator
+- Working Android-compatible phone emulator (Pixel 2, API 28, x86, Android 9.0 with Google Play was used)
 
 
 ## Instructions:
