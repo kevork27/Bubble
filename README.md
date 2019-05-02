@@ -28,11 +28,12 @@ In Android Studio: File -> New -> Project From Version Control -> Git. Enter the
 - Upload a song and a cover image
 
 
-- Go to liked songs list
-- Hold onto a song to view artist info
-- Click onto a song to view song info
-- Search a song or artist
-- Swipe left on a song to delete it
+- Click on your profile icon, which will take you to liked songs list
 - Pull down to refresh
+- "Long" click onto a song to view artist info
+- Click onto a song to view song info
+- Search a song or artist by clicking onto the search icon
+- Swipe left on a song to delete 
+
 
 - Logout
