@@ -50,9 +50,10 @@ In Android Studio: File -> New -> Project From Version Control -> Git. Enter the
 
 - Logout
 
-### Credits:
+### Contributors:
 - Milan Parikh
 - Jared Lott
 - Nada Naguib
 - Mina Zanna
 - Kevork Hamparian
+- Stephen Tucker
